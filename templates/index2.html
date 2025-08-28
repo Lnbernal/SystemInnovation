@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine Learning e Industrias</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- CSS Personalizado -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+  <!-- HEADER -->
+  <header class="header text-center py-4">
+    <h1 class="titulo">Machine Learning y las Industrias</h1>
+  </header>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sombra">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Inicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <!-- No hay links, solo la estructura -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <main class="container flex-grow-1 py-5">
+    <div class="row">
+      <!-- Texto principal -->
+      <div class="col-md-8">
+        <h2 class="mb-3 subtitulo">Bienvenido</h2>
+        <p>
+          El <b>Machine Learning</b> está transformando múltiples sectores de la industria moderna. 
+          Desde la automatización de procesos hasta la toma de decisiones inteligentes, 
+          esta disciplina ofrece herramientas poderosas para optimizar recursos, 
+          reducir costos y generar innovación.
+        </p>
+        <p>
+          En esta página exploraremos cómo el aprendizaje automático impacta áreas 
+          como la <b>salud</b>, la <b>agricultura</b>, el <b>transporte</b>, la <b>educación</b> y las <b>finanzas</b>.
+        </p>
+        <a href="#" class="btn btn-custom">Leer más</a>
+      </div>
+
+      <!-- Tarjeta lateral -->
+      <div class="col-md-4">
+        <div class="card shadow-sm tarjeta">
+          <div class="card-body">
+            <h5 class="card-title">Dato Curioso</h5>
+            <p class="card-text">
+              ¿Sabías que el 80% de las grandes empresas invierten en tecnologías 
+              de Machine Learning para mejorar su competitividad?
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer text-center py-3 mt-auto">
+    <p class="mb-0">© 2025 Universidad de Cundinamarca - Proyecto Machine Learning</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
