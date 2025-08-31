@@ -1,0 +1,70 @@
+/* ============================
+   Estilos personalizados para index3.html
+   ============================ */
+
+/* Fondo general */
+body {
+    background: linear-gradient(180deg, #7cabda, #a9c9e9);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(90deg, #198754, #0d6efd);
+    color: white;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    padding: 30px 0;
+}
+
+.titulo {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* Cards de casos de uso */
+.card-caso {
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    background-color: #ffffff;
+}
+
+.card-caso:hover {
+    transform: translateY(-8px);
+}
+
+.card-title {
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+/* Botón volver */
+.btn-volver {
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    background-color: #212529;
+    color: #f8f9fa;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 30px;
+}
