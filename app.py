@@ -12,6 +12,9 @@ def home():
 def index():
     return render_template('index2.html')
 
+@app.route('/casos')
+def casos():
+    return render_template('index3.html', cases=CASES)
 
 if __name__ == "_main_":
     app.run(debug=True)
