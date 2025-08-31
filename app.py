@@ -30,7 +30,16 @@ def casos():
             "algoritmo": "Redes neuronales profundas, Árboles de decisión, Bosques aleatorios, Transfer Learning, NLP (Procesamiento de Lenguaje Natural), Computer Vision.",
             "beneficios": "Diagnósticos más rápidos y precisos, predicción temprana, reducción de errores médicos, optimización de recursos hospitalarios.",
             "referencia": "Plain Concepts. (2023). Inteligencia Artificial en el sector salud: ejemplos reales y casos de éxito. Disponible en: https://www.plainconcepts.com/es/inteligencia-artificial-sector-salud-ejemplos"
+        },
+        {
+            "titulo": "Machine Learning en transacciones financieras",
+            "industria": "Finanzas y Banca",
+            "problema": "Detectar fraudes en transacciones, evaluar el riesgo crediticio y predecir tendencias bursátiles para optimizar las decisiones de inversión.",
+            "algoritmo": "Modelos de clasificación, Modelos predictivos, Redes neuronales, Deep Learning, Algoritmos de trading automático.",
+            "beneficios": "Mayor seguridad en transacciones, reducción de fraudes, decisiones de inversión más precisas, operaciones bursátiles de alta frecuencia, disminución del riesgo humano.",
+            "referencia": "IBM. (s.f.). Machine learning en transacciones financieras y bursátiles. Disponible en: https://www.ibm.com/es-es/think/topics/machine-learning-use-cases"
         }
+
     ]
     return render_template('index3.html', cases=CASES)
 
