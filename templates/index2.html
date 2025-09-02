@@ -3,73 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Machine Learning e Industrias</title>
+  <title>Columna de Opinión - Machine Learning</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- CSS Personalizado -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
-
-  <!-- HEADER -->
-  <header class="header text-center py-4">
-    <h1 class="titulo">Machine Learning y las Industrias</h1>
-  </header>
+<body class="d-flex flex-column min-vh-100 bg-light">
 
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sombra">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">Inicio</a>
+      <a class="navbar-brand fw-bold text-primary" href="/">Inicio</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
-        <!-- No hay links, solo la estructura -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/casos">Ejemplos</a>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <!-- CONTENIDO -->
-  <main class="container flex-grow-1 py-5">
-    <div class="row">
-      <!-- Texto principal -->
-      <div class="col-md-8">
-        <h2 class="mb-3 subtitulo">Bienvenido</h2>
-        <p>
-          El <b>Machine Learning</b> está transformando múltiples sectores de la industria moderna. 
-          Desde la automatización de procesos hasta la toma de decisiones inteligentes, 
-          esta disciplina ofrece herramientas poderosas para optimizar recursos, 
-          reducir costos y generar innovación.
-        </p>
-        <p>
-          En esta página exploraremos cómo el aprendizaje automático impacta áreas 
-          como la <b>salud</b>, la <b>agricultura</b>, el <b>transporte</b>, la <b>educación</b> y las <b>finanzas</b>.
-        </p>
-        <a href="#" class="btn btn-custom">Leer más</a>
-      </div>
+  <!-- Título Central -->
+  <div class="container text-center py-5">
+    <h1 class="titulo-principal">Machine Learning en la industria: <span class="resaltado">promesas y silencios</span></h1>
+    <p class="subtitulo">Una columna de opinión presentada en formato de mapa conceptual</p>
+  </div>
 
-      <!-- Tarjeta lateral -->
-      <div class="col-md-4">
-        <div class="card shadow-sm tarjeta">
+  <!-- Contenido en forma de mapa conceptual -->
+  <main class="container flex-grow-1">
+    <div class="row g-4">
+
+      <!-- Lo que promete -->
+      <div class="col-md-6">
+        <div class="card concepto">
           <div class="card-body">
-            <h5 class="card-title">Dato Curioso</h5>
-            <p class="card-text">
-              ¿Sabías que el 80% de las grandes empresas invierten en tecnologías 
-              de Machine Learning para mejorar su competitividad?
-            </p>
+            <h5 class="titulo-seccion">✨ Lo que promete</h5>
+            <ul>
+              <li>Control de calidad más preciso</li>
+              <li>Mantenimiento predictivo</li>
+              <li>Producción automatizada</li>
+              <li>Reducción de fallos y errores</li>
+            </ul>
+            <p class="texto-secundario">El discurso oficial pinta un futuro sin defectos y lleno de eficiencia.</p>
           </div>
         </div>
       </div>
 
-      <!--Redireccion a los casos de uso-->
-      <a href="/casos" class="btn btn-success btn-lg mt-4">Ver Casos de Uso</a>
+      <!-- Lo que se omite -->
+      <div class="col-md-6">
+        <div class="card concepto">
+          <div class="card-body">
+            <h5 class="titulo-seccion">⚠️ Lo que se omite</h5>
+            <ul>
+              <li>Costos elevados de implementación</li>
+              <li>Datos incompletos o sesgados</li>
+              <li>Resistencia cultural de los trabajadores</li>
+              <li>Riesgos éticos y de privacidad</li>
+            </ul>
+            <p class="texto-secundario">El otro lado de la moneda que casi nunca se menciona.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Segunda fila -->
+      <div class="col-md-3">
+        <div class="card concepto">
+          <div class="card-body">
+            <h5 class="titulo-seccion">📜 Lo histórico</h5>
+            <p>En los 80 se celebraba la llegada de robots industriales.  
+            Promesas similares, problemas similares: despidos, conflictos sindicales, desigualdad entre países.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card concepto">
+          <div class="card-body">
+            <h5 class="titulo-seccion">🤔 La pregunta clave</h5>
+            <p>¿Queremos que el <span class="resaltado">Machine Learning</span> sea una herramienta al servicio de la industria,  
+            o un dogma incuestionable que promete más de lo que puede cumplir?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card concepto">
+          <div class="card-body">
+            <h5 class="titulo-seccion">💡 El verdadero reto</h5>
+            <p>No es técnico, es cultural: capacitar a las personas,  
+            integrar la ética y decidir cómo queremos usar la innovación.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nuevo cuadro con link a Ejemplos -->
+      <div class="col-md-3">
+        <div class="card concepto text-center">
+          <div class="card-body">
+            <h5 class="titulo-seccion">🔗 Ver ejemplos</h5>
+            <p>Explora casos prácticos donde el <span class="resaltado">Machine Learning</span> ya está transformando la industria.</p>
+            <a href="/casos" class="btn btn-outline-primary">Ir a ejemplos</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer text-center py-3 mt-auto">
-    <p class="mb-0">© 2025 Universidad de Cundinamarca - Proyecto Machine Learning</p>
+  <!-- Footer -->
+  <footer class="footer text-center py-4 mt-auto bg-white border-top">
+    <p class="mb-0">© 2025 Universidad de Cundinamarca - Columna de Opinión. Fuente: 
+      <a href="https://atriainnovation.com/blog/el-machine-learning-en-la-industria/" target="_blank">Click aquí</a>
+    </p>
   </footer>
 
   <!-- Bootstrap JS -->

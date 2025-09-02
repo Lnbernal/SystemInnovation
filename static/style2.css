@@ -1,91 +1,99 @@
-/* ============================
-   Estilos personalizados para index.html
-   ============================ */
-
-/* Reset pequeño */
+/* ====== Estilos globales ====== */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #212529;
-    margin: 0;
-    padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
 }
 
-/* Header */
-.header {
-    background: linear-gradient(90deg, #0d6efd, #6610f2);
-    color: white;
-    text-align: center;
-    padding: 3rem 1rem;
-    text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+.titulo-principal {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4B0082; /* morado corporativo */
 }
 
-.titulo {
-    font-size: 3rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-/* Navbar */
-.sombra {
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-}
-
-.sombra:hover {
-    box-shadow: 0px 6px 14px rgba(0,0,0,0.2);
-}
-
-/* Subtítulo de bienvenida */
 .subtitulo {
-    color: #0d6efd;
-    font-weight: 600;
-    font-size: 1.3rem;
-    margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #666;
 }
 
-/* Botón personalizado */
-.btn-custom {
-    background: linear-gradient(90deg, #6610f2, #0d6efd);
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 12px 28px;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+.resaltado {
+  color: #e91e63; /* fucsia corporativo */
+  font-weight: bold;
 }
 
-.btn-custom:hover {
-    background: linear-gradient(90deg, #520dc2, #0a58ca);
-    color: #f1f3f5;
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0px 6px 14px rgba(0,0,0,0.25);
+/* ====== Tarjetas / Conceptos ====== */
+.card.concepto {
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: white;
+  position: relative;
 }
 
-/* Tarjeta lateral */
-.tarjeta {
-    border-radius: 20px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    background: #fff;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
-    overflow: hidden;
+.card.concepto:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
 }
 
-.tarjeta:hover {
-    transform: translateY(-7px);
-    box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
+.titulo-seccion {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #4B0082;
 }
 
-/* Footer */
+.texto-secundario {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ====== Conexiones de estilo "mapa mental" ====== */
+.row.g-4 {
+  position: relative;
+}
+
+.row.g-4::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  height: 90%;
+  width: 2px;
+  background: rgba(75, 0, 130, 0.2);
+  z-index: 0;
+}
+
+/* Líneas laterales conectando tarjetas */
+.card.concepto::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 30px;
+  background: rgba(233, 30, 99, 0.3);
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card.concepto:first-child::before,
+.card.concepto:nth-child(2)::before {
+  display: none; /* No queremos línea arriba de las primeras */
+}
+
+/* ====== Navbar ====== */
+.navbar .nav-link {
+  font-weight: 500;
+  color: #4B0082;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #e91e63;
+}
+
+/* ====== Footer ====== */
 .footer {
-    background-color: #212529;
-    color: #f8f9fa;
-    font-size: 0.95rem;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    margin-top: 2rem;
-    border-top: 2px solid #343a40;
+  font-size: 0.9rem;
+  color: #888;
 }
