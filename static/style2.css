@@ -1,0 +1,100 @@
+/* ====== Estilos globales ====== */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: hsl(357, 82%, 79%);
+  color: #333;
+}
+
+
+.titulo-principal {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4B0082; /* morado corporativo */
+}
+
+.subtitulo {
+  font-size: 1.2rem;
+  color: #0c0000;
+}
+
+.resaltado {
+  color: #e91e63; /* fucsia corporativo */
+  font-weight: bold;
+}
+
+/* ====== Tarjetas / Conceptos ====== */
+.card.concepto {
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: rgb(137, 243, 225);
+  position: relative;
+}
+
+.card.concepto:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.titulo-seccion {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #4B0082;
+}
+
+.texto-secundario {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ====== Conexiones de estilo "mapa mental" ====== */
+.row.g-4 {
+  position: relative;
+}
+
+.row.g-4::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  height: 90%;
+  width: 2px;
+  background: rgba(75, 0, 130, 0.2);
+  z-index: 0;
+}
+
+/* Líneas laterales conectando tarjetas */
+.card.concepto::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 30px;
+  background: rgba(233, 30, 99, 0.3);
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card.concepto:first-child::before,
+.card.concepto:nth-child(2)::before {
+  display: none; /* No queremos línea arriba de las primeras */
+}
+
+/* ====== Navbar ====== */
+.navbar .nav-link {
+  font-weight: 500;
+  color: #4B0082;
+  transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #e91e63;
+}
+
+/* ====== Footer ====== */
+.footer {
+  font-size: 0.9rem;
+  color: #888;
+}

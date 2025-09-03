@@ -21,7 +21,7 @@
             ],
             "jinja": true,
             "autoStartBrowser": true,
-            "justMyCode":true
+            "justMyCode":true 
         }
     ]
 }

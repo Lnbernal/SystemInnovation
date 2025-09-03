@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portada</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- CSS Personalizado -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+
+  <div class="container text-center py-5">
+    <!-- Logo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Logo_Universidad_de_Cundinamarca.png"
+         alt="logo" class="img-fluid mb-4" style="max-width: 400px;">
+
+    <!-- Encabezados -->
+    <h1 class="titulo-principal">Universidad de Cundinamarca</h1>
+    <h2 class="subtitulo">Machine Learning</h2>
+    <h3 class="subtitulo-2">Ingeniería de Sistemas y Computación</h3>
+    <!-- Nombres -->
+    <div class="mt-4">
+    <h3>Luis Nicolas Bernal Silva</h3>
+    <h3>Juan Andrés Pinzon Carillo</h3>
+    <h3>Juan David Hernández Cárdenas</h3>
+    <h3>Carlos Andrés Romero Rodriguez</h3>
+    <h3>2025</h3>
+    </div>
+
+
+    <!-- Botón -->
+    <a href="/index" class="btn btn-primary btn-lg boton">Ir a la Página Principal</a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
