@@ -10,10 +10,12 @@
     <form method="post">
         <label for="hours">Study Hours</label>
         <input type="number" name="hours" required>
+        <label for="diet" class="form-label">Calidad de Alimentación (1-10)</label>
+        <input type="number" name="diet" required>
         <button type="submit"> Predict </button>
     </form>
     {% if result is not none %}
-        <h2> Estimated Grade : {{result}}</h2>
+        <h2> Rendimiento : {{result}}</h2>
     {% endif %}
 </body>
 </html>
