@@ -58,7 +58,9 @@ def calculateGrade():
     calculateResult = None
     if request.method == "POST":
         hours = float(request.form["hours"])
-        calculateResult = LinealRegression.CalculateGrade(hours)
+        diet = float(request.form["diet"])
+        calculateResult = LinealRegression.Rendimiento(hours, diet)
+        calculateResult = round(calculateResult, 2)
     return render_template("LRindex.html", result = calculateResult)
 
 if __name__ == "__main__":
