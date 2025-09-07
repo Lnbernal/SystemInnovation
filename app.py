@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask import render_template
 import LinealRegression
 app = Flask(__name__)
@@ -53,7 +53,11 @@ def casos():
     ]
     return render_template('index3.html', cases=CASES)
 
-@app.route("/linearRegression/", methods=["GET", "POST"])
+@app.route('/linearRegression/conceptos')
+def linearconceptos():
+    return render_template('LRconceptos.html')
+
+@app.route('/linearRegression/ejercicio', methods=["GET", "POST"])
 def calculateGrade():
     calculateResult = None
     if request.method == "POST":
@@ -61,7 +65,8 @@ def calculateGrade():
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
         calculateResult = round(calculateResult, 2)
-    return render_template("LRindex.html", result = calculateResult)
+    return render_template('LRindex.html', result = calculateResult)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
