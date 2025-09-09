@@ -1,57 +1,16 @@
-from flask import Flask, request, render_template
-from flask import render_template
+from flask import Flask, request, render_template, url_for
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+import os
 import LinealRegression
-app = Flask(__name__)
 
+app = Flask(__name__)
 
 @app.route("/")
 def home():
-    name = "Flask"
-    return render_template('index.html') 
-
-@app.route('/index')
-def index():
-    return render_template('index2.html')
-
-@app.route('/casos')
-def casos():
-    CASES = [
-        {
-            "titulo": "Predicción y monitoreo en agricultura con Machine Learning",
-            "industria": "Agricultura",
-            "problema": "Mejorar la productividad agrícola mediante predicción del rendimiento de cultivos y detección de plagas/enfermedades usando datos meteorológicos y sensores.",
-            "algoritmo": "Random Forest, Árboles de decisión, Máquinas de soporte vectorial (SVM), Gradient Boosting, Redes neuronales convolucionales.",
-            "beneficios": "Optimización de recursos, reducción de pérdidas, planificación eficiente de siembras, control de plagas y enfermedades con alta precisión.",
-            "referencia": "Chanchí-Golondrino, A. (2022). Aplicación de machine learning en la agricultura: predicción de rendimiento y control de plagas. Universidad Nacional Abierta y a Distancia (UNAD). Disponible en: https://repository.unad.edu.co/handle/10596/67132" 
-        },
-        {
-            "titulo": "IA para detección temprana de enfermedades y apoyo diagnóstico",
-            "industria": "Salud",
-            "problema": "Dificultad para realizar diagnósticos rápidos y precisos de enfermedades como cáncer, Alzheimer y enfermedades raras, lo que retrasa el tratamiento oportuno.",
-            "algoritmo": "Redes neuronales profundas, Árboles de decisión, Bosques aleatorios, Transfer Learning, NLP (Procesamiento de Lenguaje Natural), Computer Vision.",
-            "beneficios": "Diagnósticos más rápidos y precisos, predicción temprana, reducción de errores médicos, optimización de recursos hospitalarios.",
-            "referencia": "Plain Concepts. (2023). Inteligencia Artificial en el sector salud: ejemplos reales y casos de éxito. Disponible en: https://www.plainconcepts.com/es/inteligencia-artificial-sector-salud-ejemplos"
-        },
-        {
-            "titulo": "Machine Learning en transacciones financieras",
-            "industria": "Finanzas y Banca",
-            "problema": "Detectar fraudes en transacciones, evaluar el riesgo crediticio y predecir tendencias bursátiles para optimizar las decisiones de inversión.",
-            "algoritmo": "Modelos de clasificación, Modelos predictivos, Redes neuronales, Deep Learning, Algoritmos de trading automático.",
-            "beneficios": "Mayor seguridad en transacciones, reducción de fraudes, decisiones de inversión más precisas, operaciones bursátiles de alta frecuencia, disminución del riesgo humano.",
-            "referencia": "IBM. (s.f.).10 casos de uso cotidianos del machine learning. Disponible en: https://www.ibm.com/es-es/think/topics/machine-learning-use-cases"
-        },
-        {
-            "titulo": "Machine Learning y transporte",
-            "industria": "Transporte",
-            "problema": "Optimizar rutas, tiempos de llegada, asignación de conductores y mejorar la seguridad en el transporte, incluyendo el desarrollo de vehículos autónomos.",
-            "algoritmo": "Aprendizaje supervisado, Aprendizaje no supervisado, Redes neuronales profundas, Computer Vision, Modelos predictivos de tráfico.",
-            "beneficios": "Reducción de tiempos de viaje, asignación eficiente de recursos en movilidad compartida, estimación precisa de la hora de llegada, mayor seguridad en transporte autónomo.",
-            "referencia": "IBM. (s.f.).10 casos de uso cotidianos del machine learning. Disponible en: https://www.ibm.com/es-es/think/topics/machine-learning-use-cases"
-        }
-
-
-    ]
-    return render_template('index3.html', cases=CASES)
+    return render_template('index.html')
 
 @app.route('/linearRegression/conceptos')
 def linearconceptos():
@@ -60,13 +19,62 @@ def linearconceptos():
 @app.route('/linearRegression/ejercicio', methods=["GET", "POST"])
 def calculateGrade():
     calculateResult = None
+    graph_url = None
+
+    # Dataset simulado
+    X_train = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+    y_train = np.array([2, 4, 5, 4, 5, 7, 8, 9])
+
+    # Ajuste de regresión
+    coef = np.polyfit(X_train, y_train, 1)
+    poly1d_fn = np.poly1d(coef)
+
+    # Crear gráfico con estilo mejorado
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.patch.set_facecolor('#f8f9fa')
+    ax.set_facecolor('#eaf2f8')
+
+    # Degradado de fondo
+    for i in range(100):
+        ax.axhspan(i, i + 1, facecolor=plt.cm.Blues(i / 100), alpha=0.05)
+
+    # Puntos llamativos
+    scatter = ax.scatter(X_train, y_train, c=y_train, cmap="coolwarm", s=150, edgecolors="black", linewidth=1.5, alpha=0.9, label="Datos reales")
+
+    # Línea de regresión
+    ax.plot(X_train, poly1d_fn(X_train), color="#e74c3c", linewidth=3, label="Línea de Regresión")
+
+    # Títulos y etiquetas
+    ax.set_title("📈 Regresión Lineal - Datos con Estilo", fontsize=14, color="#2c3e50", weight="bold")
+    ax.set_xlabel("Horas de Entrenamiento", fontsize=11)
+    ax.set_ylabel("Rendimiento Deportivo", fontsize=11)
+    ax.legend(loc="upper left", fontsize=9)
+    ax.grid(True, linestyle="--", alpha=0.3)
+
+    # Guardar gráfico
+    graph_path = os.path.join("static", "regresion.png")
+    plt.tight_layout()
+    plt.savefig(graph_path, dpi=120)
+    plt.close()
+
+    graph_url = url_for('static', filename='regresion.png')
+
+    # Si el usuario envía datos
     if request.method == "POST":
         hours = float(request.form["hours"])
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
         calculateResult = round(calculateResult, 2)
-    return render_template('LRindex.html', result = calculateResult)
 
+    return render_template('LRindex.html', result=calculateResult, graph_url=graph_url)
+
+@app.route('/index')
+def index():
+    return render_template('index2.html')
+
+@app.route('/casos')
+def casos():
+    return render_template('index3.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
