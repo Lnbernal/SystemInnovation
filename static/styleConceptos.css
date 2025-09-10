@@ -1,0 +1,88 @@
+/* ======= Fondo general ======= */
+body {
+  background: linear-gradient(to right, #e0f7fa, #e3f2fd);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ======= Título principal ======= */
+h1 {
+  background-color: #aad0f7;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 28px;
+}
+
+/* ======= Acordeón ======= */
+.accordion-item {
+  margin-bottom: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-button {
+  background: #4cafef;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.accordion-button:hover {
+  background: #1976d2;
+}
+
+.accordion-body {
+  background: white;
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ======= Bloques de texto internos ======= */
+.accordion-body h5 {
+  background: #e1f5fe;
+  padding: 10px;
+  border-radius: 8px;
+  color: #0277bd;
+  margin-top: 15px;
+}
+
+.accordion-body p, 
+.accordion-body ul {
+  margin-bottom: 10px;
+}
+
+/* ======= Fórmulas ======= */
+.accordion-body .bg-light {
+  background: #f3e5f5 !important;
+  border: 1px solid #ce93d8;
+  color: #6a1b9a;
+}
+
+/* ======= Botones inferiores ======= */
+.btn-primary {
+  background-color: #0288d1;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #01579b;
+}
+
+.btn-secondary {
+  background-color: #8e24aa;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #6a1b9a;
+}
