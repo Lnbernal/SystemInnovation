@@ -44,7 +44,7 @@ def grafico_horas(hours, diet):
     path = os.path.join("static", "grafico_horas.png")
     plt.savefig(path)
     plt.close()
-    return path
+    return path 
 
 def grafico_dieta(hours, diet):
 
