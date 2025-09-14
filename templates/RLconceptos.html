@@ -1,12 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regresion Logistica</title>
+    <title>Regresión Logística - Conceptos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Conceptos de regresion Logistica</h1>
-    <a href="ejercicio">Ir a ejercicio</a>
+<body class="p-4">
+    <div class="container">
+        <h1 class="mb-3">Regresión Logística — Conceptos básicos</h1>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Definición breve</h5>
+                <p>
+                    La regresión logística es un modelo estadístico utilizado para predecir
+                    una variable objetivo binaria (por ejemplo, Sí/No o 1/0). En lugar de predecir
+                    directamente una cantidad, el modelo estima la probabilidad de pertenecer a la
+                    clase positiva mediante la función sigmoide (logit), que transforma la combinación
+                    lineal de características en un valor entre 0 y 1.
+                </p>
+                <p>
+                    La decisión final (clase) suele obtenerse comparando la probabilidad resultante
+                    con un umbral (por ejemplo 0.5). La regularización se usa frecuentemente para evitar
+                    sobreajuste.
+                </p>
+            </div>
+        </div>
+
+        <h5>Flujo general (resumen)</h5>
+        <ol>
+            <li>Cargar y limpiar datos.</li>
+            <li>Codificar variables categóricas (p. ej. one-hot).</li>
+            <li>Dividir en entrenamiento y prueba (recomendado: estratificado si la clase está desequilibrada).</li>
+            <li>Escalar variables si es necesario.</li>
+            <li>Entrenar regresión logística (con regularización por defecto).</li>
+            <li>Evaluar con métricas: exactitud, reporte de clasificación, matriz de confusión, precision/recall/F1.</li>
+            <li>Usar el modelo para predecir probabilidades y decidir etiqueta según umbral.</li>
+        </ol>
+
+        <h5>Referencias (APA 7)</h5>
+        <ul>
+        <li>
+            DataCamp. (s. f.). <em>Regresión logística: teoría</em>. DataCamp. 
+            https://www.datacamp.com/es/tutorial/understanding-logistic-regression-python
+        </li>
+        <li>
+            Ciencia de Datos. (s. f.). <em>Regresión logística con Python</em>. Ciencia de Datos. 
+            https://cienciadedatos.net/documentos/py17-regresion-logistica-python
+        </li>
+        <li>
+            IBM. (s. f.). <em>¿Qué es la regresión logística en machine learning?</em>. IBM Think. 
+            https://www.ibm.com/es-es/think/topics/logistic-regression
+        </li>
+        </ul>
+        <a href="{{ url_for('logistica2') }}" class="btn btn-primary mt-3">Ir al ejercicio práctico</a>
+        <a href="/index" class="btn btn-secondary">🏠 Volver al inicio</a>
+    </div>
 </body>
 </html>
