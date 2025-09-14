@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import LinealRegression
+import RegresionLogistica
 
 app = Flask(__name__)
 
@@ -46,9 +47,31 @@ def calculatePerformance():
 def logistica():
     return render_template('RLconceptos.html')
 
-@app.route('/regresionLogistica/ejercicio')
+@app.route('/regresionLogistica/ejercicio', methods=["GET", "POST"])
 def logistica2():
-    return render_template('RLindex.html')
+    prediction = None
+    accuracy = None
+    graph_url = None
+
+    if request.method == "POST":
+        monto = float(request.form["monto"])
+        hora = int(request.form["hora"])
+        tipo = request.form["tipo"]
+        pais = request.form["pais"]
+
+        prob, resultado = RegresionLogistica.predecir_transaccion(monto, hora, tipo, pais)
+        prediction = f"{resultado} (Probabilidad: {prob:.2f}%)"
+        accuracy = RegresionLogistica.get_accuracy()
+        graph_url = url_for('static', filename="confusion_matrix.png")
+
+    return render_template(
+        'RLindex.html',
+        result=prediction,
+        accuracy=accuracy,
+        graph_url=graph_url
+    )
+
+
 
 @app.route('/index')
 def index():
