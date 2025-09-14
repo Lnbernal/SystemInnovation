@@ -42,7 +42,13 @@ def calculatePerformance():
         graph_url_diet=graph_url_diet
 )
 
+@app.route('/regresionLogistica/conceptos')
+def logistica():
+    return render_template('RLconceptos.html')
 
+@app.route('/regresionLogistica/ejercicio')
+def logistica2():
+    return render_template('RLindex.html')
 
 @app.route('/index')
 def index():
