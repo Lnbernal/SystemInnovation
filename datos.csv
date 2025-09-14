@@ -1,4 +1,4 @@
-﻿Monto,Hora,Tipo_Comercio,Pais,Fraude
+﻿Valor,Hora,Tipo_Comercio,Pais,Fraude
 150000,10,supermercado,Colombia,0
 480000,15,ropa,Colombia,0
 2500000,12,electronica,Colombia,1
@@ -9,7 +9,7 @@
 1200000,11,ropa,Colombia,0
 5200000,16,electronica,Colombia,1
 200000,13,supermercado,Colombia,0
-310000,9,ropa,Colombia,0
+310000,10,ropa,Colombia,0
 4500000,22,online,Colombia,1
 80000,19,restaurante,Colombia,0
 2700000,17,electronica,Colombia,1
@@ -19,3 +19,4 @@
 95000,20,supermercado,Colombia,0
 340000,14,ropa,Colombia,0
 3800000,10,electronica,Colombia,1
+2500000,8,ropa,Colombia,1
