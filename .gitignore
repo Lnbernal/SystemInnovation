@@ -5,7 +5,7 @@ __pycache__/
 *.pyd
 
 # Entornos virtuales
-.venv/
+.venv/  
 
 # Archivos temporales de VSCode
 .vscode/

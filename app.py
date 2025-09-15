@@ -22,7 +22,7 @@ def calculatePerformance():
     graph_url_hours = None
     graph_url_diet = None
 
-    if request.method == "POST":
+    if request.method == "POST": 
         hours = float(request.form["hours"])
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
