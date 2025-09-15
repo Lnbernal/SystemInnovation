@@ -1,61 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regresión Logística - Conceptos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regresión Logística - Conceptos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body class="p-4">
-    <div class="container">
-        <h1 class="mb-3">Regresión Logística — Conceptos básicos</h1>
+<body class="bg-light">
 
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>Definición breve</h5>
-                <p>
-                    La regresión logística es un modelo estadístico utilizado para predecir
-                    una variable objetivo binaria (por ejemplo, Sí/No o 1/0). En lugar de predecir
-                    directamente una cantidad, el modelo estima la probabilidad de pertenecer a la
-                    clase positiva mediante la función sigmoide (logit), que transforma la combinación
-                    lineal de características en un valor entre 0 y 1.
-                </p>
-                <p>
-                    La decisión final (clase) suele obtenerse comparando la probabilidad resultante
-                    con un umbral (por ejemplo 0.5). La regularización se usa frecuentemente para evitar
-                    sobreajuste.
-                </p>
-            </div>
-        </div>
-
-        <h5>Flujo general (resumen)</h5>
-        <ol>
-            <li>Cargar y limpiar datos.</li>
-            <li>Codificar variables categóricas (p. ej. one-hot).</li>
-            <li>Dividir en entrenamiento y prueba (recomendado: estratificado si la clase está desequilibrada).</li>
-            <li>Escalar variables si es necesario.</li>
-            <li>Entrenar regresión logística (con regularización por defecto).</li>
-            <li>Evaluar con métricas: exactitud, reporte de clasificación, matriz de confusión, precision/recall/F1.</li>
-            <li>Usar el modelo para predecir probabilidades y decidir etiqueta según umbral.</li>
-        </ol>
-
-        <h5>Referencias (APA 7)</h5>
-        <ul>
-        <li>
-            DataCamp. (s. f.). <em>Regresión logística: teoría</em>. DataCamp. 
-            https://www.datacamp.com/es/tutorial/understanding-logistic-regression-python
-        </li>
-        <li>
-            Ciencia de Datos. (s. f.). <em>Regresión logística con Python</em>. Ciencia de Datos. 
-            https://cienciadedatos.net/documentos/py17-regresion-logistica-python
-        </li>
-        <li>
-            IBM. (s. f.). <em>¿Qué es la regresión logística en machine learning?</em>. IBM Think. 
-            https://www.ibm.com/es-es/think/topics/logistic-regression
-        </li>
-        </ul>
-        <a href="{{ url_for('logistica2') }}" class="btn btn-primary mt-3">Ir al ejercicio práctico</a>
-        <a href="/index" class="btn btn-secondary">🏠 Volver al inicio</a>
+  <!-- Hero -->
+  <section class="bg-primary text-white py-5">
+    <div class="container text-center">
+      <h1 class="fw-bold display-5">📊 Regresión Logística</h1>
+      <p class="lead">Conceptos básicos y flujo de trabajo en Machine Learning</p>
+      <div class="mt-3">
+        <a href="{{ url_for('logistica2') }}" class="btn btn-light btn-lg me-2">
+          <i class="bi bi-cpu"></i> Ir al ejercicio práctico
+        </a>
+        <a href="/index" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-house-door"></i> Inicio
+        </a>
+      </div>
     </div>
+  </section>
+
+  <!-- Contenido -->
+  <div class="container my-5">
+
+    <div class="row g-4">
+      <!-- Definición -->
+      <div class="col-lg-6">
+        <div class="card shadow border-0 h-100">
+          <div class="card-body">
+            <h4 class="card-title text-primary">
+              <i class="bi bi-lightbulb-fill"></i> Definición
+            </h4>
+            <p>
+              La regresión logística es un modelo estadístico utilizado para predecir
+              una variable objetivo binaria (Sí/No o 1/0). Estima la probabilidad de pertenecer
+              a la clase positiva mediante la función sigmoide (<em>logit</em>), que transforma la combinación
+              lineal de características en un valor entre 0 y 1.
+            </p>
+            <p>
+              La decisión final se obtiene comparando la probabilidad con un umbral (ej: 0.5).
+              La regularización ayuda a evitar el sobreajuste.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flujo general -->
+      <div class="col-lg-6">
+        <div class="card shadow border-0 h-100">
+          <div class="card-body">
+            <h4 class="card-title text-success">
+              <i class="bi bi-diagram-3-fill"></i> Flujo general
+            </h4>
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item">Cargar y limpiar datos.</li>
+              <li class="list-group-item">Codificar variables categóricas (ej: one-hot).</li>
+              <li class="list-group-item">Dividir en entrenamiento y prueba (estratificado si hay desbalance).</li>
+              <li class="list-group-item">Escalar variables si es necesario.</li>
+              <li class="list-group-item">Entrenar regresión logística (con regularización por defecto).</li>
+              <li class="list-group-item">Evaluar con métricas: exactitud, clasificación, matriz de confusión, precision/recall/F1.</li>
+              <li class="list-group-item">Usar el modelo para predecir probabilidades y decidir etiqueta según umbral.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Referencias -->
+    <div class="card shadow border-0 mt-4">
+      <div class="card-body">
+        <h4 class="card-title text-info">
+          <i class="bi bi-journal-bookmark-fill"></i> Referencias (APA 7)
+        </h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            DataCamp. (s. f.). <em>Regresión logística: teoría</em>. 
+            <a href="https://www.datacamp.com/es/tutorial/understanding-logistic-regression-python" target="_blank">DataCamp</a>
+          </li>
+          <li class="list-group-item">
+            Ciencia de Datos. (s. f.). <em>Regresión logística con Python</em>. 
+            <a href="https://cienciadedatos.net/documentos/py17-regresion-logistica-python" target="_blank">Ciencia de Datos</a>
+          </li>
+          <li class="list-group-item">
+            IBM. (s. f.). <em>¿Qué es la regresión logística en machine learning?</em>. 
+            <a href="https://www.ibm.com/es-es/think/topics/logistic-regression" target="_blank">IBM Think</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-3 mt-5">
+    <div class="container text-center">
+      <small>© 2025 Proyecto Académico · Regresión Logística</small>
+    </div>
+  </footer>
+
 </body>
 </html>
