@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, url_for
 import os
-import LinealRegression  # asumes que sigue existiendo
+import LinealRegression  
 import RegresionLogistica
 
 app = Flask(__name__)
@@ -83,7 +83,7 @@ def logistica2():
         graph_url=graph_url,
         dataset_info=dataset_info
     )
-
+  
 @app.route('/index')
 def index():
     return render_template('index2.html')
@@ -129,5 +129,5 @@ def casos():
     return render_template('index3.html', cases=CASES)
 
 if __name__ == "__main__":
-    # Asegúrate de ejecutar desde el directorio del proyecto para que encuentre datos.csv y static/
+    
     app.run(debug=True)

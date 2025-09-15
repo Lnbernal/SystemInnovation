@@ -3,106 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regresión Logística - Detección de Fraude</title>
+    <title>🔎 Detección de Fraude</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body class="p-4">
-    <div class="container">
-        <h1 class="mb-4">🔎 Detección de Fraude en Transacciones (Regresión Logística)</h1>
+<body class="bg-light">
 
-        <!-- Descripción dataset -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>Descripción del dataset</h5>
-                <p>
-                    Variables: {{ dataset_info.columns }} <br>
-                    Tamaño: {{ dataset_info.shape[0] }} filas × {{ dataset_info.shape[1] }} columnas<br>
-                    Conteo clases: {{ dataset_info.class_counts }} <br>
-                    Significado variable objetivo 'Fraude': {{ dataset_info.target_meaning }}
-                </p>
-            </div>
+    <!-- Hero / Banner -->
+    <section class="bg-primary text-white py-5">
+        <div class="container text-center">
+            <h1 class="fw-bold display-5">🔎 Detección de Fraude</h1>
+            <p class="lead">Simulación de un modelo de regresión logística aplicado a transacciones</p>
+           <div class="mt-3">
+    <a href="{{ url_for('index') }}" class="btn btn-light btn-lg me-2">
+        <i class="bi bi-house-door"></i> Inicio
+    </a>
+    <a href="{{ url_for('logistica') }}" class="btn btn-outline-light btn-lg">
+        <i class="bi bi-lightbulb-fill"></i> Conceptos
+    </a>
+</div>
+
         </div>
+    </section>
 
-        <!-- Métricas -->
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h6>Exactitud (Accuracy)</h6>
-                        <h3>{{ accuracy }}%</h3>
-                    </div>
+    <!-- Formulario -->
+    <div class="container mt-5">
+        <div class="card shadow-sm p-4">
+            <h4 class="text-center text-primary mb-4">
+                <i class="bi bi-credit-card-2-front-fill"></i> Ingrese los datos de la transacción
+            </h4>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Monto de la transacción (COP)</label>
+                    <input class="form-control" type="number" step="0.01" name="monto" required>
                 </div>
-            </div>
-
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h6>Reporte de clasificación</h6>
-                        <div>
-                            {{ classification_html | safe }}
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Hora del día (0-23)</label>
+                    <input class="form-control" type="number" name="hora" min="0" max="23" required>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Tipo de comercio</label>
+                    <select class="form-select" name="tipo">
+                        <option value="Supermercado">Supermercado</option>
+                        <option value="Ropa">Ropa</option>
+                        <option value="Electrónica">Electrónica</option>
+                        <option value="Restaurante">Restaurante</option>
+                        <option value="Online">Online</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">País</label>
+                    <select class="form-select" name="pais">
+                        <option value="Colombia">Colombia</option>
+                        <option value="USA">USA</option>
+                        <option value="España">España</option>
+                        <option value="México">México</option>
+                        <option value="Argentina">Argentina</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">
+                    <i class="bi bi-search"></i> Predecir
+                </button>
+            </form>
         </div>
-
-        <!-- Matriz de confusión -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h6>Matriz de confusión</h6>
-                <img src="{{ graph_url }}" alt="Matriz de confusión" class="img-fluid" style="max-width:300px;">
-                <p class="small mt-2">Filas = reales (0/1), Columnas = predichos (0/1).</p>
-            </div>
-        </div>
-
-        <!-- Formulario de predicción -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5>Formulario de predicción</h5>
-                <form method="POST">
-                    <div class="mb-2">
-                        <label class="form-label">Monto de la transacción</label>
-                        <input class="form-control" type="number" step="0.01" name="monto" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Hora del día (0-23)</label>
-                        <input class="form-control" type="number" name="hora" min="0" max="23" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Tipo de comercio</label>
-                        <select class="form-select" name="tipo">
-                            <option value="supermercado">Supermercado</option>
-                            <option value="ropa">Ropa</option>
-                            <option value="electronica">Electrónica</option>
-                            <option value="restaurante">Restaurante</option>
-                            <option value="online">Online</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">País</label>
-                        <select class="form-select" name="pais">
-                            <option value="Colombia">Colombia</option>
-                            <option value="USA">USA</option>
-                            <option value="España">España</option>
-                            <option value="México">México</option>
-                            <option value="Argentina">Argentina</option>
-                        </select>
-                    </div>
-
-                    <button class="btn btn-success" type="submit">Predecir</button>
-                </form>
-
-                {% if result is not none %}
-                    <div class="mt-3 p-3 border rounded">
-                        <h3>Predicción: <span class="badge bg-primary">{{ result }}</span></h3>
-                        <p>Probabilidad estimada de clase "Sí": <strong>{{ probability }}%</strong></p>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <a href="/regresionLogistica/conceptos" class="btn btn-secondary">Volver a conceptos</a>
-        <a href="/index" class="btn btn-secondary">🏠 Volver al inicio</a>
     </div>
+
+    <!-- Resultado -->
+    <div class="container mt-4">
+        {% if result is not none %}
+        <div class="alert alert-info text-center">
+            <h5>
+                <i class="bi bi-check-circle-fill"></i>
+                Resultado: {{ result }} ({{ probability }}%)
+            </h5>
+            <p>Precisión del modelo: {{ accuracy }}%</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Gráfico / Matriz -->
+    <div class="container mt-3 text-center">
+        {% if graph_url %}
+        <div class="card shadow-sm p-3">
+            <h6 class="text-secondary">
+                <i class="bi bi-bar-chart-line-fill"></i> Matriz de Confusión
+            </h6>
+            <img src="{{ graph_url }}" alt="Matriz de confusión" class="img-fluid mx-auto" style="max-inline-width: 400px;">
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3 mt-5">
+        <div class="container text-center">
+            <small>© 2025 Proyecto Académico · Regresión Logística</small>
+        </div>
+    </footer>
+
 </body>
 </html>
+   
