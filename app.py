@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, url_for
 import os
-import LinealRegression  
+import LinealRegression  # asumes que sigue existiendo
 import RegresionLogistica
 
 app = Flask(__name__)
@@ -45,45 +45,32 @@ def calculatePerformance():
 def logistica():
     return render_template('RLconceptos.html')
 
+
 @app.route('/regresionLogistica/ejercicio', methods=["GET", "POST"])
 def logistica2():
     prediction = None
-    probability = None
-    metrics = None
-    classification_html = None
+    accuracy = None
     graph_url = None
-    dataset_info = None
-
-    # Obtener métricas y paths (evaluación ya se ejecutó en RegresionLogistica al importar)
-    eval_res = RegresionLogistica.evaluate()
-    metrics = {
-        'accuracy': eval_res['accuracy'] * 100  # convertir a porcentaje
-    }
-    classification_html = eval_res['classification_html']
-    graph_url = url_for('static', filename=os.path.basename(eval_res['confusion_path']))
-    dataset_info = RegresionLogistica.get_dataset_description()
 
     if request.method == "POST":
-        # Leer valores del formulario
-        monto = float(request.form.get("monto"))
-        hora = int(request.form.get("hora"))
-        tipo = request.form.get("tipo")
-        pais = request.form.get("pais")
+        monto = float(request.form["monto"])
+        hora = int(request.form["hora"])
+        tipo = request.form["tipo"]
+        pais = request.form["pais"]
 
-        prob, label = RegresionLogistica.predict_label(monto, hora, tipo, pais, threshold=0.5)
-        probability = round(prob * 100, 2)
-        prediction = label  # "Sí" / "No"
+        # predecir_transaccion devuelve (probabilidad, etiqueta)
+        prob, resultado = RegresionLogistica.predecir_transaccion(monto, hora, tipo, pais)
+        prediction = f"{resultado} ({prob:.2f}%)"
+        accuracy = RegresionLogistica.get_accuracy()
+        graph_url = url_for('static', filename="confusion_matrix.png")
 
     return render_template(
         'RLindex.html',
         result=prediction,
-        probability=probability,
-        accuracy=round(metrics['accuracy'], 4),
-        classification_html=classification_html,
-        graph_url=graph_url,
-        dataset_info=dataset_info
+        accuracy=accuracy,
+        graph_url=graph_url
     )
-  
+
 @app.route('/index')
 def index():
     return render_template('index2.html')
@@ -128,6 +115,6 @@ def casos():
     ]
     return render_template('index3.html', cases=CASES)
 
-if __name__ == "__main__":
-    
+if __name__ == "_main_":
+    # Asegúrate de ejecutar desde el directorio del proyecto para que encuentre datos.csv y static/
     app.run(debug=True)
