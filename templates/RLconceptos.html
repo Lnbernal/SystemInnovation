@@ -6,11 +6,71 @@
   <title>Regresión Logística - Conceptos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .hero-section {
+      background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6a00);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+    }
+    @keyframes gradientAnimation {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .notebook-card {
+      border: 2px dashed #f39c12;
+      background: linear-gradient(135deg, #fffbe6, #fff3e6);
+      box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      position: relative;
+    }
+    .notebook-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 20px;
+      height: 100%;
+      width: 4px;
+      background: repeating-linear-gradient(
+        to bottom,
+        #f39c12,
+        #f39c12 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      border-radius: 2px;
+    }
+    .background-figures {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .circle {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      opacity: 0.7;
+      background: red;
+    }
+  </style>
 </head>
-<body class="bg-light">  
+<body>  
+
+  <!-- Fondo animado -->
+  <div class="background-figures">
+    {% for i in range(20) %}
+      <div class="circle"></div>
+    {% endfor %}
+  </div>
 
   <!-- Hero -->
-  <section class="bg-primary text-white py-5">
+  <section class="hero-section text-white py-5">
     <div class="container text-center">
       <h1 class="fw-bold display-5">📊 Regresión Logística</h1>
       <p class="lead">Conceptos básicos y flujo de trabajo en Machine Learning</p>
@@ -18,7 +78,7 @@
         <a href="{{ url_for('logistica2') }}" class="btn btn-light btn-lg me-2">
           <i class="bi bi-cpu"></i> Ir al ejercicio práctico
         </a>
-        <a href="/index" class="btn btn-outline-light btn-lg">
+        <a href="{{ url_for('home') }}" class="btn btn-outline-light btn-lg">
           <i class="bi bi-house-door"></i> Inicio
         </a>
       </div>
@@ -26,33 +86,21 @@
   </section>
 
   <!-- Contenido -->
-  <div class="container my-5">
-
+  <div class="container my-5 content-section">
     <div class="row g-4">
-      <!-- Definición -->
       <div class="col-lg-6">
-        <div class="card shadow border-0 h-100">
+        <div class="card notebook-card h-100">
           <div class="card-body">
             <h4 class="card-title text-primary">
               <i class="bi bi-lightbulb-fill"></i> Definición
             </h4>
-            <p>
-              La regresión logística es un modelo estadístico utilizado para predecir
-              una variable objetivo binaria (Sí/No o 1/0). Estima la probabilidad de pertenecer
-              a la clase positiva mediante la función sigmoide (<em>logit</em>), que transforma la combinación
-              lineal de características en un valor entre 0 y 1.
-            </p>
-            <p>
-              La decisión final se obtiene comparando la probabilidad con un umbral (ej: 0.5).
-              La regularización ayuda a evitar el sobreajuste.
-            </p>
+            <p>La regresión logística es un modelo estadístico utilizado para predecir una variable objetivo binaria (Sí/No o 1/0). Estima la probabilidad de pertenecer a la clase positiva mediante la función sigmoide (<em>logit</em>), que transforma la combinación lineal de características en un valor entre 0 y 1.</p>
+            <p>La decisión final se obtiene comparando la probabilidad con un umbral (ej: 0.5). La regularización ayuda a evitar el sobreajuste.</p>
           </div>
         </div>
       </div>
-
-      <!-- Flujo general -->
       <div class="col-lg-6">
-        <div class="card shadow border-0 h-100">
+        <div class="card notebook-card h-100">
           <div class="card-body">
             <h4 class="card-title text-success">
               <i class="bi bi-diagram-3-fill"></i> Flujo general
@@ -71,8 +119,7 @@
       </div>
     </div>
 
-    <!-- Referencias -->
-    <div class="card shadow border-0 mt-4">
+    <div class="card notebook-card mt-4">
       <div class="card-body">
         <h4 class="card-title text-info">
           <i class="bi bi-journal-bookmark-fill"></i> Referencias (APA 7)
@@ -95,12 +142,44 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="bg-dark text-light py-3 mt-5">
     <div class="container text-center">
       <small>© 2025 Proyecto Académico · Regresión Logística</small>
     </div>
   </footer>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const circles = document.querySelectorAll('.circle');
+      const colors = ['#ff4d4d','#ff9933','#33cc33','#33ccff','#9933ff','#ff33cc','#ffcc33','#66ff66','#3399ff','#ff6666','#ffcc99','#ccff33','#33ffcc','#cc33ff','#ff3399','#ff9966','#66ccff','#ff66cc','#33ff99','#ffcc66'];
+
+      circles.forEach((circle, index) => {
+        circle.style.background = colors[index % colors.length];
+        circle.style.top = Math.random() * window.innerHeight + 'px';
+        circle.style.left = Math.random() * window.innerWidth + 'px';
+
+        let dx = (Math.random() - 0.5) * 2;
+        let dy = (Math.random() - 0.5) * 2;
+
+        function move() {
+          let top = parseFloat(circle.style.top);
+          let left = parseFloat(circle.style.left);
+
+          top += dy;
+          left += dx;
+
+          if(top < 0 || top > window.innerHeight - 25) dy = -dy;
+          if(left < 0 || left > window.innerWidth - 25) dx = -dx;
+
+          circle.style.top = top + 'px';
+          circle.style.left = left + 'px';
+
+          requestAnimationFrame(move);
+        }
+
+        move();
+      });
+    });
+  </script>
 </body>
 </html>

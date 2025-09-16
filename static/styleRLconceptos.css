@@ -1,0 +1,101 @@
+/* Fondo de la hero section */
+.hero-section {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6a00);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* Cards estilo libreta */
+.notebook-card {
+  border: 2px dashed #f39c12;
+  background: linear-gradient(135deg, #fffbe6, #fff3e6);
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+  border-radius: 15px;
+  padding: 1rem;
+  position: relative;
+}
+
+.notebook-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  height: 100%;
+  width: 4px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #f39c12,
+    #f39c12 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  border-radius: 2px;
+}
+
+/* Fondo animado con círculos */
+.background-figures {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  opacity: 0.7;
+  background: red; /* Se reemplaza por JS */
+}
+
+/* ---------- JS integrado ---------- */
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const circles = document.querySelectorAll('.circle');
+  const colors = ['#ff4d4d','#ff9933','#33cc33','#33ccff','#9933ff','#ff33cc','#ffcc33','#66ff66','#3399ff','#ff6666','#ffcc99','#ccff33','#33ffcc','#cc33ff','#ff3399','#ff9966','#66ccff','#ff66cc','#33ff99','#ffcc66'];
+
+  circles.forEach((circle, index) => {
+    // Color aleatorio
+    circle.style.background = colors[index % colors.length];
+
+    // Posición inicial aleatoria
+    circle.style.top = Math.random() * window.innerHeight + 'px';
+    circle.style.left = Math.random() * window.innerWidth + 'px';
+
+    // Velocidad aleatoria
+    let dx = (Math.random() - 0.5) * 2;
+    let dy = (Math.random() - 0.5) * 2;
+
+    function move() {
+      let top = parseFloat(circle.style.top);
+      let left = parseFloat(circle.style.left);
+
+      // Cambiar posición
+      top += dy;
+      left += dx;
+
+      // Rebotar en los bordes
+      if(top < 0 || top > window.innerHeight - 25) dy = -dy;
+      if(left < 0 || left > window.innerWidth - 25) dx = -dx;
+
+      circle.style.top = top + 'px';
+      circle.style.left = left + 'px';
+
+      requestAnimationFrame(move);
+    }
+
+    move();
+  });
+});
+</script>
