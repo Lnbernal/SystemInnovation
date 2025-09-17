@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regresión Logística - Conceptos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Vinculamos el CSS externo -->
+  <link rel="stylesheet" href="/static/styleRLconceptos.css">
+</head>
+<body>  
+
+  <!-- Fondo animado -->
+  <div class="background-figures">
+    {% for i in range(20) %}
+      <div class="circle"></div>
+    {% endfor %}
+  </div>
+
+  <!-- Hero -->
+  <section class="hero-section text-white py-5">
+    <div class="container text-center">
+      <h1 class="fw-bold display-5">📊 Regresión Logística</h1>
+      <p class="lead">Conceptos básicos y flujo de trabajo en Machine Learning</p>
+      <div class="mt-3">
+        <a href="/regresionLogistica/ejercicio" class="btn btn-light btn-lg me-2">
+          <i class="bi bi-cpu"></i> Ir al ejercicio práctico
+        </a>
+        <a href="/" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-house-door"></i> Inicio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido -->
+  <div class="container my-5 content-section">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card notebook-card h-100">
+          <div class="card-body">
+            <h4 class="card-title text-primary">
+              <i class="bi bi-lightbulb-fill"></i> Definición
+            </h4>
+            <p>La regresión logística es un modelo estadístico utilizado para predecir una variable objetivo binaria (Sí/No o 1/0). Estima la probabilidad de pertenecer a la clase positiva mediante la función sigmoide (<em>logit</em>), que transforma la combinación lineal de características en un valor entre 0 y 1.</p>
+            <p>La decisión final se obtiene comparando la probabilidad con un umbral (ej: 0.5). La regularización ayuda a evitar el sobreajuste.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card notebook-card h-100">
+          <div class="card-body">
+            <h4 class="card-title text-success">
+              <i class="bi bi-diagram-3-fill"></i> Flujo general
+            </h4>
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item">Cargar y limpiar datos.</li>
+              <li class="list-group-item">Codificar variables categóricas (ej: one-hot).</li>
+              <li class="list-group-item">Dividir en entrenamiento y prueba (estratificado si hay desbalance).</li>
+              <li class="list-group-item">Escalar variables si es necesario.</li>
+              <li class="list-group-item">Entrenar regresión logística (con regularización por defecto).</li>
+              <li class="list-group-item">Evaluar con métricas: exactitud, clasificación, matriz de confusión, precision/recall/F1.</li>
+              <li class="list-group-item">Usar el modelo para predecir probabilidades y decidir etiqueta según umbral.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card notebook-card mt-4">
+      <div class="card-body">
+        <h4 class="card-title text-info">
+          <i class="bi bi-journal-bookmark-fill"></i> Referencias (APA 7)
+        </h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            DataCamp. (s. f.). <em>Regresión logística: teoría</em>. 
+            <a href="https://www.datacamp.com/es/tutorial/understanding-logistic-regression-python" target="_blank">DataCamp</a>
+          </li>
+          <li class="list-group-item">
+            Ciencia de Datos. (s. f.). <em>Regresión logística con Python</em>. 
+            <a href="https://cienciadedatos.net/documentos/py17-regresion-logistica-python" target="_blank">Ciencia de Datos</a>
+          </li>
+          <li class="list-group-item">
+            IBM. (s. f.). <em>¿Qué es la regresión logística en machine learning?</em>. 
+            <a href="https://www.ibm.com/es-es/think/topics/logistic-regression" target="_blank">IBM Think</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-dark text-light py-3 mt-5">
+    <div class="container text-center">
+      <small>© 2025 Proyecto Académico · Regresión Logística</small>
+    </div>
+  </footer>
+
+  <!-- Botones de navegación -->
+  <div class="container text-center mt-3 mb-5">
+    <a href="{{ url_for('logistica') }}" class="btn btn-secondary me-2">Volver a Conceptos</a>
+    <a href="/" class="btn btn-secondary">Volver al Inicio</a>
+  </div>
+
+  <!-- Script para partículas -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const circles = document.querySelectorAll('.circle');
+      const colors = ['#ff4d4d','#ff9933','#33cc33','#33ccff','#9933ff','#ff33cc','#ffcc33','#66ff66','#3399ff','#ff6666','#ffcc99','#ccff33','#33ffcc','#cc33ff','#ff3399','#ff9966','#66ccff','#ff66cc','#33ff99','#ffcc66'];
+
+      circles.forEach((circle, index) => {
+        circle.style.background = colors[index % colors.length];
+        circle.style.top = Math.random() * window.innerHeight + 'px';
+        circle.style.left = Math.random() * window.innerWidth + 'px';
+
+        let dx = (Math.random() - 0.5) * 2;
+        let dy = (Math.random() - 0.5) * 2;
+
+        function move() {
+          let top = parseFloat(circle.style.top);
+          let left = parseFloat(circle.style.left);
+
+          top += dy;
+          left += dx;
+
+          if(top < 0 || top > window.innerHeight - 25) dy = -dy;
+          if(left < 0 || left > window.innerWidth - 25) dx = -dx;
+
+          circle.style.top = top + 'px';
+          circle.style.left = left + 'px';
+
+          requestAnimationFrame(move);
+        }
+
+        move();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -12,23 +12,47 @@
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-primary" href="/">Inicio</a>
-      <br>
-      <a class="navbar-brand fw-bold text-primary" href="/linearRegression/conceptos">RegresionLineal</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarContent"> 
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/casos">Ejemplos</a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="/">Inicio</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent"> 
+      <ul class="navbar-nav ms-auto">
+
+        <!-- Dropdown Regresión Lineal -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-bold text-primary" href="#" id="linearDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Regresión Lineal
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="linearDropdown">
+            <li><a class="dropdown-item" href="/linearRegression/conceptos">Conceptos</a></li>
+            <li><a class="dropdown-item" href="/linearRegression/ejercicio">Ejercicio</a></li>
+          </ul>
+        </li>
+
+        <!-- Dropdown Regresión Logística -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-bold text-primary" href="#" id="logisticaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Regresión Logística
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="logisticaDropdown">
+            <li><a class="dropdown-item" href="/regresionLogistica/conceptos">Conceptos</a></li>
+            <li><a class="dropdown-item" href="/regresionLogistica/ejercicio">Ejercicio</a></li>
+          </ul>
+        </li>
+
+        <!-- Ejemplos -->
+        <li class="nav-item">
+          <a class="nav-link" href="/casos">Ejemplos</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Título Central -->
   <div class="container text-center py-5">
