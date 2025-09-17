@@ -115,6 +115,6 @@ def casos():
     ]
     return render_template('index3.html', cases=CASES)
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     # Asegúrate de ejecutar desde el directorio del proyecto para que encuentre datos.csv y static/
     app.run(debug=True)
