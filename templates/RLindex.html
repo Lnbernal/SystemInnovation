@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <title>Regresión Logística - Detección de Fraude</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Enlace al CSS personalizado -->
+    <!-- CSS personalizado -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styleRLindex.css') }}">
 </head>
 <body>
   <div class="container py-5">
     <h1 class="mb-4 text-center titulo-pagina">🔎 Detección de Fraude en Transacciones</h1>
 
+    <!-- Botones Inicio y Casos de Uso -->
+    <div class="d-flex justify-content-center mb-4 gap-3">
+      <a href="{{ url_for('index') }}" class="btn btn-primary">🏠 Inicio</a>
+      <a href="{{ url_for('casos') }}" class="btn btn-success">📂 Casos de Uso</a>
+    </div>
+
+    <!-- Formulario de predicción -->
     <form method="POST" class="card p-4 shadow-sm formulario-fraude">
       <div class="mb-3">
         <label class="form-label">Monto de la transacción (COP)</label>
@@ -40,9 +47,10 @@
           <option value="Argentina">Argentina</option>
         </select>
       </div>
-      <button class="btn btn-enviar" type="submit">Predecir</button>
+      <button class="btn btn-enviar btn-warning w-100 mt-3" type="submit">Predecir</button>
     </form>
 
+    <!-- Resultado y gráfica -->
     {% if result %}
       <div class="alert alert-info mt-4 text-center resultado-fraude">
         <h4>Resultado: {{ result }}</h4>
