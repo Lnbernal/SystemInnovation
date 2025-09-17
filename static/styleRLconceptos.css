@@ -1,4 +1,4 @@
-/* Fuente y reset */
+/* Reset general y fuente */
 * {
   margin: 0;
   padding: 0;
@@ -6,86 +6,72 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Fondo con diseño creativo y tecnológico */
+/* Fondo dinámico con degradado lila */
 body {
-  background: #1a237e; /* azul oscuro base */
+  background: linear-gradient(135deg, #9d50bb, #6e48aa, #b06ab3);
+  background-size: 300% 300%;
+  animation: gradientMove 15s ease infinite;
   color: #fff;
   overflow-x: hidden;
 }
 
-/* Diseño de circuitos animado */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px) repeat,
-              linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px) repeat,
-              linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px) repeat;
-  background-size: 50px 50px, 25px 25px, 25px 25px;
-  animation: moveCircuit 60s linear infinite;
-  pointer-events: none;
-  z-index: -1;
+/* Animación del fondo */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-@keyframes moveCircuit {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(-100px, -100px); }
-}
-
-/* Sección superior */
+/* Sección superior con degradado lila-rosado */
 .hero-section {
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  background: linear-gradient(135deg, #b06ab3, #8e54e9);
   color: white;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   padding: 60px 20px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Contenido centrado */
+/* Contenedor central */
 .content-section {
   max-width: 1100px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* Tarjetas */
-.custom-card {
+/* Tarjetas con estilo libreta mejorado */
+.notebook-card {
+  border: none;
+  background: linear-gradient(135deg, #ffffff, #f6f0fa);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
-  border: none;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.85);
-  color: #222;
-  transition: all 0.3s ease;
-  padding: 20px;
-  margin-bottom: 30px;
-}
-
-.custom-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.95);
-}
-
-/* Listas con diseño */
-.list-group-item {
-  background: transparent;
+  padding: 1rem;
   color: #333;
-  border: none;
+  position: relative;
 }
 
-/* Títulos */
-.card-title {
-  margin-bottom: 15px;
-  font-weight: bold;
+.notebook-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  height: 100%;
+  width: 3px;
+  background: #b06ab3;
+  border-radius: 2px;
 }
 
-/* Botones */
+/* Botones superiores */
 .btn {
   border-radius: 8px;
   font-weight: bold;
   transition: all 0.3s ease;
+}
+
+.btn-light {
+  background: #b06ab3;
+  border: none;
+  color: #fff;
 }
 
 .btn-outline-light {
@@ -93,16 +79,56 @@ body::before {
   color: #fff;
 }
 
-.btn-outline-light:hover {
-  background: #fff;
-  color: #1a237e;
+.btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
-/* Footer */
+/* Footer con degradado lila-púrpura */
 footer {
-  background: #222;
-  color: #eee;
+  background: linear-gradient(135deg, #6e48aa, #9d50bb);
+  background-size: 200% 200%;
+  animation: gradientFooter 12s ease infinite;
+  color: #fff;
   font-size: 14px;
   padding: 20px 0;
   text-align: center;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes gradientFooter {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Eliminamos botones del final */
+.container.text-center.mt-3.mb-5 {
+  display: none;
+}
+
+/* Fondo con partículas */
+.background-figures {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  opacity: 0.5;
+  background: #d7bde2;
+}
+
+/* Asegurar que el contenido esté sobre las partículas */
+.hero-section, .container, footer {
+  position: relative;
+  z-index: 2;
 }
