@@ -45,6 +45,13 @@ def calculatePerformance():
 def logistica():
     return render_template('RLconceptos.html')
 
+@app.route('/TiposDeAlgoritmos/conceptos')
+def Tipos():
+    return render_template('indexTipos.html')
+
+@app.route('/TiposDeAlgoritmos/ejercicio')
+def Tiposeje():
+    return render_template('indexTiposEj.html')
 
 @app.route('/regresionLogistica/ejercicio', methods=["GET", "POST"])
 def logistica2():
