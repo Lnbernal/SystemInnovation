@@ -5,12 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conceptos</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='Mapa.css') }}">
+  <style>
+    /* --- Hero Banner --- */
+    .hero {
+      background: linear-gradient(to right, #2e7d32, #66bb6a); /* Verde oscuro → Verde claro */
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* --- Botones --- */
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .hero-buttons a {
+      text-decoration: none;
+      background: white;
+      color: #2e7d32; /* Verde oscuro */
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.3s;
+      border: 2px solid #2e7d32;
+    }
+
+    .hero-buttons a:hover {
+      background: #1b5e20; /* Verde más oscuro */
+      color: white;
+      border-color: #1b5e20;
+    }
+
+    /* --- Footer --- */
+    footer {
+      background: linear-gradient(to right, #1b5e20, #388e3c); /* Verde intenso */
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
 
-  <header>
+  <!-- HERO BANNER -->
+  <section class="hero">
     <h1>Mapa Conceptual: Clasificación de Algoritmos</h1>
-  </header>
+    <p>Explora los conceptos clave y practica con ejercicios interactivos.</p>
+    <div class="hero-buttons">
+      <a href="index.html">Inicio</a>
+      <a href="ejercicio.html">Ejercicio</a>
+    </div>
+  </section>
 
   <main class="content">
     <section class="mapa">
