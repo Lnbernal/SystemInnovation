@@ -1,13 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conceptos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clasificación de Algoritmos - Conceptos</title>
+
+  <!-- Bootstrap y Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Tu CSS personalizado -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='Mapa.css') }}">
 </head>
 <body>
-    <div>
-    <iframe width="600" height="400" frameBorder="0" src="https://www.mindmeister.com/maps/public_map_shell/3821264198/clasificaci-n?width=600&height=400&z=auto&no_share=1&no_logo=1" scrolling="no" style="overflow:hidden;margin-bottom:5px">Your browser is not able to display frames. Please visit <a href="https://www.mindmeister.com/3821264198/clasificaci-n" target="_blank">Clasificación</a> on MindMeister.</iframe>
+
+  <!-- HERO BANNER -->
+  <section class="hero-section text-white py-5" style="background: linear-gradient(to right, #2e7d32, #66bb6a);">
+    <div class="container text-center">
+      <h1 class="fw-bold display-5"> Clasificación de Algoritmos</h1>
+      <p class="lead">Explora los conceptos clave y practica con ejercicios interactivos</p>
+      <div class="mt-3">
+        <a href="/index" class="btn btn-outline-light btn-lg me-2">
+          <i class="bi bi-house-door"></i> Inicio
+        </a>
+        <a href="{{ url_for('Tiposeje') }}" class="btn btn-light btn-lg">
+          <i class="bi bi-cpu"></i> Ejercicio
+        </a>
+      </div>
     </div>
+  </section>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="content container my-5">
+    <section class="mapa text-center">
+      <iframe 
+        src="https://www.mindmeister.com/maps/public_map_shell/3821264198/clasificaci-n?width=800&height=600&z=auto&no_share=1&no_logo=1" 
+        scrolling="no" style="width: 100%; height: 500px; border: none; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        Tu navegador no soporta iframes. 
+        <a href="https://www.mindmeister.com/3821264198/clasificaci-n" target="_blank">Ver en MindMeister</a>
+      </iframe>
+    </section>
+
+    <!-- Referencias -->
+    <aside class="referencias mt-5">
+      <h2 class="text-success"><i class="bi bi-journal-bookmark-fill"></i> Referencias (APA 7)</h2>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Acevedo Núñez, M. A. (2017). 
+          <em>Machine learning: algoritmos de clasificación y sus aplicaciones en el análisis de datos</em>. 
+          Repositorio UNAM. 
+          <a href="https://repositorio.unam.mx/contenidos/ficha/machine-learning-algoritmos-de-clasificacion-y-sus-aplicaciones-en-el-analisis-de-datos-158417" target="_blank">Ver recurso</a>
+        </li>
+        <li class="list-group-item">
+          DataScientest. (2023). 
+          <em>Algoritmo de clasificación: ¿qué es y cómo funciona?</em>. 
+          <a href="https://datascientest.com/es/algoritmo-de-clasificacion" target="_blank">Ver recurso</a>
+        </li>
+        <li class="list-group-item">
+          IBM. (s. f.). 
+          <em>¿Qué es Random Forest?</em>. IBM México. 
+          <a href="https://www.ibm.com/mxes/think/topics/random-forest" target="_blank">Ver recurso</a>
+        </li>
+        <li class="list-group-item">
+          Arnaiz, J. (2017). 
+          <em>Árbol de decisión, Random Forest, Gradient Boosting y C5.0</em>. RPubs. 
+          <a href="https://rpubs.com/joaquin_ar/255596" target="_blank">Ver recurso</a>
+        </li>
+        <li class="list-group-item">
+          Datos y Ciencia. (2019). 
+          <em>Aprendizaje Supervisado: Introducción a la Clasificación y Principales Algoritmos</em>. Medium. 
+          <a href="https://medium.com/datos-y-ciencia/aprendizaje-supervisado-introducci%C3%B3n-a-la-clasificaci%C3%B3n-y-principales-algoritmos-dadee99c9407" target="_blank">Ver recurso</a>
+        </li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-success text-light text-center py-3 mt-5">
+    <div class="container">
+      <small>© 2025 Mapa Conceptual ML_Tipos_Clasificación - Universidad de Cundinamarca - Sede Chía</small>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
