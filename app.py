@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, url_for
 import os
-import LinealRegression  # asumes que sigue existiendo
+import LinealRegression  
 import RegresionLogistica
 from tipos import LightGBMCase 
 
@@ -25,7 +25,7 @@ def calculatePerformance():
         hours = float(request.form["hours"])
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
-        calculateResult = min(round(calculateResult, 2), 10)  # límite en 10
+        calculateResult = min(round(calculateResult, 2), 10) 
 
         graph_path_hours = LinealRegression.grafico_horas(hours, diet)
         graph_path_diet = LinealRegression.grafico_dieta(hours, diet)
