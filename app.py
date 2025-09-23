@@ -2,7 +2,9 @@ from flask import Flask, request, render_template, url_for
 import os
 import LinealRegression  # asumes que sigue existiendo
 import RegresionLogistica
+from tipos import LightGBMCase 
 
+LightGBMCase.train()
 app = Flask(__name__)
 
 @app.route("/")
@@ -49,9 +51,49 @@ def logistica():
 def Tipos():
     return render_template('indexTipos.html')
 
-@app.route('/TiposDeAlgoritmos/ejercicio')
-def Tiposeje():
-    return render_template('indexTiposEj.html')
+
+
+@app.route("/TiposDeAlgoritmos/ejercicio", methods=["GET", "POST"])
+def tipos_ejercicio():
+    result = None
+    prob = None
+    accuracy = None
+    graphs = {
+        "distribucion": "/static/class_distribution.png",
+        "confusion": "/static/confusion_matrix_lightgbm.png"
+    }
+
+    if request.method == "POST":
+        try:
+            # Capturar valores del formulario
+            tiempo_uso = float(request.form["tiempo_uso"])
+            frecuencia = int(request.form["frecuencia"])
+            interacciones = int(request.form["interacciones"])
+            ubicacion = int(request.form["ubicacion"])
+
+            # Crear vector de entrada
+            features = [tiempo_uso, frecuencia, interacciones, ubicacion]
+
+            # Predicción
+            # Predicción
+            result, prob = LightGBMCase.predict(features)
+
+
+            # Evaluación del modelo
+            eval_results = LightGBMCase.evaluate()
+            accuracy = eval_results["accuracy"]
+
+        except Exception as e:
+            result = f"Error en predicción: {e}"
+
+    return render_template(
+        "indexTiposEj.html",
+        result=result,
+        prob=prob,
+        accuracy=accuracy,
+        graphs=graphs
+    )
+
 
 @app.route('/regresionLogistica/ejercicio', methods=["GET", "POST"])
 def logistica2():
