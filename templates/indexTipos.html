@@ -1,13 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conceptos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conceptos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='Mapa.css') }}">
 </head>
 <body>
-    <div>
-    <iframe width="600" height="400" frameBorder="0" src="https://www.mindmeister.com/maps/public_map_shell/3821264198/clasificaci-n?width=600&height=400&z=auto&no_share=1&no_logo=1" scrolling="no" style="overflow:hidden;margin-bottom:5px">Your browser is not able to display frames. Please visit <a href="https://www.mindmeister.com/3821264198/clasificaci-n" target="_blank">Clasificación</a> on MindMeister.</iframe>
-    </div>
+
+  <header>
+    <h1>Mapa Conceptual: Clasificación de Algoritmos</h1>
+  </header>
+
+  <main class="content">
+    <section class="mapa">
+      <iframe 
+        src="https://www.mindmeister.com/maps/public_map_shell/3821264198/clasificaci-n?width=800&height=600&z=auto&no_share=1&no_logo=1" 
+        scrolling="no">
+        Tu navegador no soporta iframes. 
+        <a href="https://www.mindmeister.com/3821264198/clasificaci-n" target="_blank">Ver en MindMeister</a>
+      </iframe>
+    </section>
+
+    <aside class="referencias">
+      <h2>Referencias (APA 7)</h2>
+      <ul>
+        <li>Acevedo Núñez, M. A. (2017). <i>Machine learning: algoritmos de clasificación y sus aplicaciones en el análisis de datos</i> [Tesis de licenciatura, Universidad Nacional Autónoma de México]. Repositorio UNAM. Recuperado de https://repositorio.unam.mx/contenidos/ficha/machine-learning-algoritmos-de-clasificacion-y-sus-aplicaciones-en-el-analisis-de-datos-158417</li>
+        <li>DataScientest. (2023). <i>Algoritmo de clasificación: ¿qué es y cómo funciona?</i>. Recuperado de https://datascientest.com/es/algoritmo-de-clasificacion</li>
+        <li>IBM. (s. f.). <i>¿Qué es Random Forest?</i>. IBM México. Recuperado de https://www.ibm.com/mxes/think/topics/random-forest</li>
+        <li>Arnaiz, J. (2017). <i>Árbol de decisión, Random Forest, Gradient Boosting y C5.0</i>. RPubs. Recuperado de https://rpubs.com/joaquin_ar/255596</li>
+        <li>Datos y Ciencia. (2019). <i>Aprendizaje Supervisado: Introducción a la Clasificación y Principales Algoritmos</i>. Medium. Recuperado de https://medium.com/datos-y-ciencia/aprendizaje-supervisado-introducci%C3%B3n-a-la-clasificaci%C3%B3n-y-principales-algoritmos-dadee99c9407</li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer>
+    2025 Mapa Conceptual ML_Tipos_Clasificación - Universidad de Cundinamarca - Sede Chía
+  </footer>
+
 </body>
 </html>
