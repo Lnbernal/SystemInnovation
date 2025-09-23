@@ -75,9 +75,7 @@ def tipos_ejercicio():
             features = [tiempo_uso, frecuencia, interacciones, ubicacion]
 
             # Predicción
-            # Predicción
-            result, prob = LightGBMCase.predict(features)
-
+            result, prob = LightGBMCase.predict_label(features)
 
             # Evaluación del modelo
             eval_results = LightGBMCase.evaluate()
