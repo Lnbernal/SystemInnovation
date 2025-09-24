@@ -63,6 +63,15 @@
       </select>
       <button type="submit"><i class="bi bi-graph-up"></i> Predecir</button>
     </form>
+<!-- Resultados -->
+    {% if result %}
+      <div class="alert alert-success shadow-sm border-0">
+        <h4><i class="bi bi-check-circle"></i> Resultado de la predicción</h4>
+        <p><b>Tipo de Usuario:</b> {{ result }}</p>
+        <p><b>Probabilidad:</b> {{ prob }}%</p>
+        <p><b>Exactitud del modelo:</b> {{ accuracy }}</p>
+      </div>
+    {% endif %}
 
     <!-- Resultados -->
     {% if result %}
