@@ -32,22 +32,27 @@
 
   <!-- CONTENIDO -->
   <main class="container pb-5">
-    <div class="card glass-card">
-      <h4><i class="bi bi-database"></i> Dataset de Entrenamiento</h4>
-      <p>Este dataset contiene información simulada de <b>tiempo de uso diario</b>,
-        <b>frecuencia de apertura</b>, <b>interacciones con funciones clave</b> y 
-        <b>ubicación geográfica</b> de usuarios en aplicaciones móviles.
-      </p>
-      <p>El modelo entrenado con <b>LightGBM</b> clasifica a los usuarios en:</p>
-      <ul>
-        <li><b>Inactivo</b></li>
-        <li><b>Ocasional</b></li>
-        <li><b>Activo</b></li>
-      </ul>
+
+    <!-- TARJETAS EN FILA -->
+    <div class="cards-row">
+      <div class="card">
+        <h4><i class="bi bi-database"></i> Dataset de Entrenamiento</h4>
+        <p>Información simulada de <b>tiempo de uso diario</b>, <b>frecuencia de apertura</b>, <b>interacciones clave</b> y <b>ubicación geográfica</b>.</p>
+      </div>
+
+      <div class="card">
+        <h4><i class="bi bi-clipboard-check"></i> Predicción</h4>
+        <p>El modelo <b>LightGBM</b> clasifica a los usuarios en <b>Inactivo</b>, <b>Ocasional</b> o <b>Activo</b>.</p>
+      </div>
+
+      <div class="card">
+        <h4><i class="bi bi-bar-chart"></i> Resultados</h4>
+        <p>Incluye probabilidad de predicción y exactitud del modelo para evaluar resultados.</p>
+      </div>
     </div>
 
-    <!-- Formulario -->
-    <form method="post" class="card glass-card">
+    <!-- FORMULARIO -->
+    <form method="post" class="form-card">
       <h4><i class="bi bi-clipboard-check"></i> Haz tu predicción</h4>
       <input type="number" name="tiempo_uso" step="0.1" placeholder="Tiempo de uso diario (horas)" required>
       <input type="number" name="frecuencia" placeholder="Frecuencia de apertura (veces/día)" required>
@@ -59,32 +64,22 @@
       <button type="submit"><i class="bi bi-graph-up"></i> Predecir</button>
     </form>
 
-    <!-- Resultados -->
-    {% if result %}
-      <div class="card glass-card">
-        <h4><i class="bi bi-check-circle"></i> Resultado de la predicción</h4>
-        <p><b>Tipo de Usuario:</b> {{ result }}</p>
-        <p><b>Probabilidad:</b> {{ prob }}%</p>
-        <p><b>Exactitud del modelo:</b> {{ accuracy }}</p>
-      </div>
-    {% endif %}
-
-    <!-- Gráficas -->
-    <div class="row mt-4 text-center">
+    <!-- GRAFICAS -->
+    <div class="graphs-row">
       {% if graphs.distribucion %}
-        <div class="col-md-6">
+        <div class="graph">
           <h5><i class="bi bi-pie-chart"></i> Distribución de Clases</h5>
-          <img src="{{ graphs.distribucion }}" class="img-fluid rounded shadow" alt="Distribución">
+          <img src="{{ graphs.distribucion }}" alt="Distribución">
         </div>
       {% endif %}
-
       {% if graphs.confusion %}
-        <div class="col-md-6">
+        <div class="graph">
           <h5><i class="bi bi-grid-3x3-gap"></i> Matriz de Confusión</h5>
-          <img src="{{ graphs.confusion }}" class="img-fluid rounded shadow" alt="Matriz de Confusión">
+          <img src="{{ graphs.confusion }}" alt="Matriz de Confusión">
         </div>
       {% endif %}
     </div>
+
   </main>
 
   <!-- FOOTER -->
