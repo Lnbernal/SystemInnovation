@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 import matplotlib
-matplotlib.use("Agg")  # evita abrir ventanas de GUI
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
@@ -23,8 +23,6 @@ class LightGBMCase:
     @classmethod
     def train(cls):
         data = pd.read_csv("usuarios.csv")
-
-        # Convertir ubicacion a numérico
         data["ubicacion"] = data["ubicacion"].map({"Rural": 0, "Urbana": 1})
 
         X = data[["tiempo_uso", "frecuencia", "interacciones", "ubicacion"]]
@@ -44,7 +42,6 @@ class LightGBMCase:
         }
 
         cls.model = lgb.train(params, train_data, num_boost_round=50)
-        cls._generate_graphs()
 
     @classmethod
     def predict_label(cls, features):
@@ -55,6 +52,8 @@ class LightGBMCase:
         label_index = y_pred[0].argmax()
         label = cls.reverse_mapping[label_index]
         prob = round(y_pred[0][label_index] * 100, 2)
+
+        cls._generate_graphs_from_input(label_index)
         return label, prob
 
     @classmethod
@@ -66,31 +65,36 @@ class LightGBMCase:
         y_pred_labels = [p.argmax() for p in y_pred]
 
         acc = accuracy_score(cls.y_test, y_pred_labels)
-        report = classification_report(
-            cls.y_test, y_pred_labels,
-            target_names=list(cls.reverse_mapping.values()),
-            zero_division=0
-        )
-
-        return {"accuracy": round(acc * 100, 2), "report": report}
+        return {"accuracy": round(acc * 100, 2)}
 
     @classmethod
-    def _generate_graphs(cls):
+    def _generate_graphs_from_input(cls, label_index):
         os.makedirs("static", exist_ok=True)
 
-        # Matriz de confusión
-        y_pred = cls.model.predict(cls.X_test)
-        y_pred_labels = [p.argmax() for p in y_pred]
-        cm = confusion_matrix(cls.y_test, y_pred_labels)
+        # Distribución simulada
+        counts = [0, 0, 0]
+        counts[label_index] = 1
+
+        plt.figure(figsize=(5, 4))
+        plt.bar(["Activo", "Ocasional", "Inactivo"], counts, color="skyblue")
+        plt.title("Distribución de Clases (Entrada)")
+        plt.ylabel("Cantidad")
+        plt.tight_layout()
+        plt.savefig("static/class_distribution.png")
+        plt.close()
+
+        # Matriz de confusión simulada
+        cm = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        cm[label_index][label_index] = 1
 
         plt.figure(figsize=(5, 4))
         plt.imshow(cm, cmap="Blues")
-        plt.title("Matriz de Confusión")
+        plt.title("Matriz de Confusión (Entrada)")
         plt.xlabel("Predicho")
         plt.ylabel("Real")
-        for i in range(cm.shape[0]):
-            for j in range(cm.shape[1]):
-                plt.text(j, i, cm[i, j], ha="center", va="center", color="red")
+        for i in range(3):
+            for j in range(3):
+                plt.text(j, i, cm[i][j], ha="center", va="center", color="red")
         plt.tight_layout()
         plt.savefig("static/confusion_matrix_lightgbm.png")
         plt.close()
