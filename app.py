@@ -1,8 +1,10 @@
 from flask import Flask, request, render_template, url_for
 import os
-import LinealRegression  # asumes que sigue existiendo
+import LinealRegression  
 import RegresionLogistica
+from tipos import LightGBMCase 
 
+LightGBMCase.train()
 app = Flask(__name__)
 
 @app.route("/")
@@ -23,7 +25,7 @@ def calculatePerformance():
         hours = float(request.form["hours"])
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
-        calculateResult = min(round(calculateResult, 2), 10)  # límite en 10
+        calculateResult = min(round(calculateResult, 2), 10) 
 
         graph_path_hours = LinealRegression.grafico_horas(hours, diet)
         graph_path_diet = LinealRegression.grafico_dieta(hours, diet)
@@ -44,6 +46,51 @@ def calculatePerformance():
 @app.route('/regresionLogistica/conceptos')
 def logistica():
     return render_template('RLconceptos.html')
+
+@app.route('/TiposDeAlgoritmos/conceptos')
+def Tipos():
+    return render_template('indexTipos.html')
+
+
+
+@app.route("/TiposDeAlgoritmos/ejercicio", methods=["GET", "POST"])
+def tipos_ejercicio():
+    result = None
+    prob = None
+    accuracy = None
+    graphs = {
+        "distribucion": "/static/class_distribution.png",
+        "confusion": "/static/confusion_matrix_lightgbm.png"
+    }
+
+    if request.method == "POST":
+        try:
+            # Capturar valores del formulario
+            tiempo_uso = float(request.form["tiempo_uso"])
+            frecuencia = int(request.form["frecuencia"])
+            interacciones = int(request.form["interacciones"])
+            ubicacion = int(request.form["ubicacion"])
+
+            # Crear vector de entrada
+            features = [tiempo_uso, frecuencia, interacciones, ubicacion]
+
+            # Predicción
+            result, prob = LightGBMCase.predict_label(features)
+
+            # Evaluación del modelo
+            eval_results = LightGBMCase.evaluate()
+            accuracy = eval_results["accuracy"]
+
+        except Exception as e:
+            result = f"Error en predicción: {e}"
+
+    return render_template(
+        "indexTiposEj.html",
+        result=result,
+        prob=prob,
+        accuracy=accuracy,
+        graphs=graphs
+    )
 
 
 @app.route('/regresionLogistica/ejercicio', methods=["GET", "POST"])
