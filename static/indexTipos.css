@@ -1,0 +1,97 @@
+/* Fondo animado del hero */
+.hero-section {
+  background: linear-gradient(-45deg, #9c27b0, #7b1fa2, #4a148c, #6a1b9a);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Logo en la esquina superior izquierda */
+.logo-container {
+  position: absolute;
+  top: 30px;
+  left: 25px;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Imagen del logo más grande con efecto hover */
+.logo-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+  background: white;
+  padding: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Texto debajo del logo */
+.logo-text {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Título principal */
+h1 {
+  color: #00BCD4;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Botones */
+.btn-outline-light:hover {
+  background-color: white;
+  color: #00BCD4;
+  transition: 0.3s;
+}
+
+/* Fondo del contenido principal con animación suave */
+.content {
+  background: linear-gradient(135deg, #ffffff, #e0f7fa, #ffffff);
+  background-size: 400% 400%;
+  animation: contentGradient 15s ease infinite;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 5;
+}
+
+/* Animación del fondo general de la página */
+body {
+  background: linear-gradient(120deg, #ffffff, #cce7ff, #ffffff, #b2ebf2, #ffffff);
+  background-size: 200% 200%;
+  animation: bodyWave 20s linear infinite;
+}
+
+@keyframes contentGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación tipo “olas de luz” para el fondo */
+@keyframes bodyWave {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 50% 50%; }
+  50% { background-position: 100% 0%; }
+  75% { background-position: 50% 50%; }
+  100% { background-position: 0% 0%; }
+}
