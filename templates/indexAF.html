@@ -44,13 +44,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for i, point in enumerate(trajectory) %}
-            <tr>
-                <td>{{ i }}</td>
-                <td>{{ point[0] }}</td>
-                <td>{{ point[1] }}</td>
-            </tr>
-            {% endfor %}
+           {% for point in trajectory %}
+<tr>
+    <td>{{ loop.index0 }}</td>
+    <td>{{ point[0] }}</td>
+    <td>{{ point[1] }}</td>
+</tr>
+{% endfor %}
+
         </tbody>
     </table>
     {% endif %}
