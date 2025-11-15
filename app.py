@@ -118,6 +118,17 @@ def logistica2():
         graph_url=graph_url
     )
 
+@app.route('/AprendizajeporRefuerzo/conceptos')
+def Aprendizaje():
+    return render_template('AFconceptos.html')
+
+@app.route('/AprendizajeporRefuerzo/ejercicio')
+def Aprendizaje2():
+    return render_template('indexAF.html')
+
+
+
+
 @app.route('/index')
 def index():
     return render_template('index2.html')
