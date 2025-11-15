@@ -10,7 +10,6 @@
 </head>
 
 <body class="bg-light">
-<body class="bg-light">
 
 <!-- Overlay de carga -->
 <div id="loadingOverlay" 
@@ -21,14 +20,6 @@
 </div>
 
 <div class="container py-5">
-
-    {% if mensaje %}
-    <div class="alert alert-success text-center mt-3">
-        {{ mensaje }}
-    </div>
-    {% endif %}
-
-
     <h1 class="mb-4 text-primary text-center">Caso práctico: Q-Learning en MountainCar</h1>
 
     <p class="text-center">
@@ -38,12 +29,11 @@
 
     <div class="text-center mb-4">
         <a href="/aprendizajeRF/entrenar" class="btn btn-primary" onclick="showLoader()">Entrenar agente</a>
-
         <a href="/aprendizajeRF/grafica" class="btn btn-success">Ver gráfica de recompensa</a>
         <a href="/aprendizajeRF/politica" class="btn btn-info">Probar política aprendida</a>
     </div>
 
-    {% if graph %}
+     {% if graph %}
     <div class="text-center mt-4">
         <h4>Movimientos realizados por el agente en la simulación</h4>
             <p class="text-center text-muted">
@@ -66,14 +56,13 @@
             </tr>
         </thead>
         <tbody>
-           {% for point in trajectory %}
+            {% for point in trajectory %}
 <tr>
     <td>{{ loop.index0 }}</td>
     <td>{{ point[0] }}</td>
     <td>{{ point[1] }}</td>
 </tr>
 {% endfor %}
-
         </tbody>
     </table>
     {% endif %}

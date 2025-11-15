@@ -48,9 +48,7 @@ reward_history = []
 # ENTRENAMIENTO Q-LEARNING
 # ============================================================
 def train_mountaincar():
-    global Q_table, epsilon, reward_history
-
-    reward_history = []   # Reiniciar solo al entrenar
+    global Q_table, epsilon
 
     for episode in range(episodes):
 
@@ -63,6 +61,7 @@ def train_mountaincar():
 
         while not (terminated or truncated):
 
+            # Política e-greedy
             if np.random.random() < epsilon:
                 action = env.action_space.sample()
             else:
@@ -81,18 +80,15 @@ def train_mountaincar():
 
         reward_history.append(total_reward)
 
+        # Reducir exploración
         if epsilon > epsilon_min:
             epsilon *= epsilon_decay
 
+    # Guardar Q-table
     with open("static/mountaincar_qtable.pkl", "wb") as f:
         pickle.dump(Q_table, f)
-        # Guardar histórico de recompensas
-    with open("static/reward_history.pkl", "wb") as f:
-        pickle.dump(reward_history, f)
-
 
     return reward_history
-
 
 
 # ============================================================
@@ -105,15 +101,6 @@ def load_model():
             Q_table = pickle.load(f)
         return True
     return False
-
-def load_reward_history():
-    global reward_history
-    if os.path.exists("static/reward_history.pkl"):
-        with open("static/reward_history.pkl", "rb") as f:
-            reward_history = pickle.load(f)
-        return True
-    return False
-
 
 
 # ============================================================

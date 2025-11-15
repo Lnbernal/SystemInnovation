@@ -148,9 +148,6 @@ def af_mountaincar():
 
 
 # Acción: entrenar el agente
-# ============================================================
-# APRENDIZAJE POR REFUERZO - ENTRENAR
-# ============================================================
 @app.route('/aprendizajeRF/entrenar')
 def af_entrenar():
     train_mountaincar()      # Entrenar el modelo
@@ -165,24 +162,20 @@ def af_entrenar():
     )
 
 
-# Acción: mostrar gráficaz
+# Acción: mostrar gráfica
 @app.route('/aprendizajeRF/grafica')
 def af_grafica():
-    import os
     import matplotlib.pyplot as plt
-
-    global reward_history
-    load_reward_history()  # ESTA ES LA LÍNEA QUE FALTABA
+    import os
 
     if not reward_history:
-        mensaje = "Aún no has entrenado el modelo."
+        return render_template('indexAF.html', graph=None, trajectory=None)
 
-    # Crear gráfica
     plt.figure(figsize=(8, 4))
     plt.plot(reward_history)
     plt.xlabel("Episodios")
     plt.ylabel("Recompensa acumulada")
-    plt.title("Evolución del aprendizaje")
+    plt.title("Evolución de la recompensa por episodio")
 
     os.makedirs('static', exist_ok=True)
     filepath = os.path.join('static', 'reward_plot.png')
@@ -193,13 +186,10 @@ def af_grafica():
 
     graph_url = url_for('static', filename='reward_plot.png')
 
-    return render_template(
-        'indexAF.html',
-        graph=graph_url,
-        trajectory=None
-    )
+    return render_template('indexAF.html', graph=graph_url, trajectory=None)
 
 
+# Acción: probar la política aprendida
 # Acción: probar la política aprendida
 @app.route('/aprendizajeRF/politica')
 def af_politica():
@@ -236,7 +226,6 @@ def af_politica():
         trajectory=trajectory,
         action_count=action_count
     )
-
 
 
 @app.route('/index')
