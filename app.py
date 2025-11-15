@@ -1,19 +1,30 @@
 from flask import Flask, request, render_template, url_for
 import os
-import LinealRegression  
+import LinealRegression
 import RegresionLogistica
-from tipos import LightGBMCase 
+from tipos import LightGBMCase
 
+# Import del módulo MountainCar (asegúrate de que MountainCarQLearning.py esté en el mismo directorio)
+from MountainCarQLearning import train_mountaincar, reward_history, run_policy
+
+# Entrena LightGBM al iniciar (como en tu app original)
 LightGBMCase.train()
+
 app = Flask(__name__)
+
 
 @app.route("/")
 def home():
     return render_template('index.html')
 
+
+# --------------------
+# Regresión lineal
+# --------------------
 @app.route('/linearRegression/conceptos')
 def linearconceptos():
     return render_template('LRconceptos.html')
+
 
 @app.route('/linearRegression/ejercicio', methods=["GET", "POST"])
 def calculatePerformance():
@@ -25,7 +36,7 @@ def calculatePerformance():
         hours = float(request.form["hours"])
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
-        calculateResult = min(round(calculateResult, 2), 10) 
+        calculateResult = min(round(calculateResult, 2), 10)
 
         graph_path_hours = LinealRegression.grafico_horas(hours, diet)
         graph_path_diet = LinealRegression.grafico_dieta(hours, diet)
@@ -40,6 +51,7 @@ def calculatePerformance():
         graph_url_diet=graph_url_diet
     )
 
+
 # --------------------
 # Regresión logística
 # --------------------
@@ -47,10 +59,10 @@ def calculatePerformance():
 def logistica():
     return render_template('RLconceptos.html')
 
+
 @app.route('/TiposDeAlgoritmos/conceptos')
 def Tipos():
     return render_template('indexTipos.html')
-
 
 
 @app.route("/TiposDeAlgoritmos/ejercicio", methods=["GET", "POST"])
@@ -118,20 +130,91 @@ def logistica2():
         graph_url=graph_url
     )
 
+
+# --------------------
+# Aprendizaje por Refuerzo (MountainCar)
+# --------------------
+
+# Conceptos (página estática)
+@app.route('/RL/conceptos')
+def rl_conceptos():
+    # Renderiza la página de conceptos (templates/RL_conceptos.html)
+    return render_template('RL_conceptos.html')
+
+
+# Caso práctico - landing (botones para entrenar, ver gráfica y probar política)
+@app.route('/RL/mountaincar')
+def rl_mountaincar():
+    # Inicialmente no mostramos gráfica ni trayectoria
+    return render_template('RL_mountaincar.html', graph=None, trajectory=None)
+
+
+# Entrenar el agente (llama a train_mountaincar del módulo)
+@app.route('/RL/entrenar')
+def rl_entrenar():
+    # Ejecuta el entrenamiento (síncrono). train_mountaincar debe poblar reward_history y guardar qtable.
+    train_mountaincar()
+    # Después de entrenar redirigimos a la vista del caso práctico (puedes mostrar gráfica manualmente)
+    return render_template('RL_mountaincar.html', graph=None, trajectory=None)
+
+
+# Generar y mostrar la gráfica de recompensas
+@app.route('/RL/grafica')
+def rl_grafica():
+    import matplotlib.pyplot as plt
+
+    # Si no hay rewards, informar visualmente mostrando plantilla sin gráfica
+    if not reward_history:
+        return render_template('RL_mountaincar.html', graph=None, trajectory=None)
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(reward_history)
+    plt.xlabel("Episodios")
+    plt.ylabel("Recompensa acumulada")
+    plt.title("Evolución de la recompensa por episodio")
+    os.makedirs('static', exist_ok=True)
+    filepath = os.path.join('static', 'reward_plot.png')
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
+
+    # Devolver la plantilla mostrando la gráfica
+    return render_template('RL_mountaincar.html', graph=url_for('static', filename='reward_plot.png'), trajectory=None)
+
+
+# Ejecutar la política aprendida y mostrar la trayectoria (lista de estados)
+@app.route('/RL/politica')
+def rl_politica():
+    trajectory = run_policy()  # devuelve lista de estados (pos, vel) o lista de observaciones
+    # Si run_policy devuelve objetos complejos, puedes filtrar solo (pos, vel) en la plantilla o aquí
+    # Convertir a lista simple si es numpy
+    try:
+        trajectory = [list(map(float, s)) for s in trajectory]
+    except Exception:
+        # si trajectory ya es lista de tuplas/arrays con 2 valores, está bien
+        pass
+
+    return render_template('RL_mountaincar.html', graph=None, trajectory=trajectory)
+
+
+# --------------------
+# Otras rutas de tu app
+# --------------------
 @app.route('/AprendizajeporRefuerzo/conceptos')
 def Aprendizaje():
+    # Mantengo esta ruta si la usas en otros lugares; la dejo apuntando a la página original
     return render_template('AFconceptos.html')
+
 
 @app.route('/AprendizajeporRefuerzo/ejercicio')
 def Aprendizaje2():
     return render_template('indexAF.html')
 
 
-
-
 @app.route('/index')
 def index():
     return render_template('index2.html')
+
 
 @app.route('/casos')
 def casos():
@@ -142,7 +225,7 @@ def casos():
             "problema": "Mejorar la productividad agrícola mediante predicción del rendimiento de cultivos y detección de plagas/enfermedades usando datos meteorológicos y sensores.",
             "algoritmo": "Random Forest, Árboles de decisión, Máquinas de soporte vectorial (SVM), Gradient Boosting, Redes neuronales convolucionales.",
             "beneficios": "Optimización de recursos, reducción de pérdidas, planificación eficiente de siembras, control de plagas y enfermedades con alta precisión.",
-            "referencia": "Chanchí-Golondrino, A. (2022). Aplicación de machine learning en la agricultura: predicción de rendimiento y control de plagas. Universidad Nacional Abierta y a Distancia (UNAD). Disponible en: https://repository.unad.edu.co/handle/10596/67132" 
+            "referencia": "Chanchí-Golondrino, A. (2022). Aplicación de machine learning en la agricultura: predicción de rendimiento y control de plagas. Universidad Nacional Abierta y a Distancia (UNAD). Disponible en: https://repository.unad.edu.co/handle/10596/67132"
         },
         {
             "titulo": "IA para detección temprana de enfermedades y apoyo diagnóstico",
@@ -168,10 +251,9 @@ def casos():
             "beneficios": "Reducción de tiempos de viaje, asignación eficiente de recursos en movilidad compartida, estimación precisa de la hora de llegada, mayor seguridad en transporte autónomo.",
             "referencia": "IBM. (s.f.).10 casos de uso cotidianos del machine learning. Disponible en: https://www.ibm.com/es-es/think/topics/machine-learning-use-cases"
         }
-
-
     ]
     return render_template('index3.html', cases=CASES)
+
 
 if __name__ == "__main__":
     # Asegúrate de ejecutar desde el directorio del proyecto para que encuentre datos.csv y static/

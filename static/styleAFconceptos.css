@@ -1,0 +1,18 @@
+#concepts-container {
+    max-width: 900px;
+}
+
+.formula-box {
+    background: #f4f4f4;
+    border-left: 4px solid #0d6efd;
+    padding: 10px;
+    font-family: monospace;
+}
+
+.accordion-button {
+    font-weight: 500;
+}
+
+.table {
+    background: white;
+}
