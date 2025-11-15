@@ -1,5 +1,5 @@
 import numpy as np
-import gym
+import gymnasium as gym
 import pickle
 import os
 
@@ -21,25 +21,27 @@ def discretize_state(state):
     vel_bin = np.digitize(vel, vel_space)
     return (pos_bin, vel_bin)
 
+
 # ============================================================
 # Inicializar Q-Table
 # ============================================================
 n_states = (len(pos_space) + 1, len(vel_space) + 1)
-n_actions = env.action_space.n   # 3 acciones
+n_actions = env.action_space.n
 
 Q_table = np.zeros(n_states + (n_actions,))
+
 
 # ============================================================
 # Parámetros de entrenamiento
 # ============================================================
-alpha = 0.1         # learning rate
-gamma = 0.99        # descuento
-epsilon = 1.0       # exploración inicial
+alpha = 0.1
+gamma = 0.99
+epsilon = 1.0
 epsilon_min = 0.05
 epsilon_decay = 0.995
 episodes = 5000
 
-reward_history = []  # Para graficar en Flask
+reward_history = []
 
 
 # ============================================================
@@ -49,34 +51,40 @@ def train_mountaincar():
     global Q_table, epsilon
 
     for episode in range(episodes):
-        state = discretize_state(env.reset()[0])
-        total_reward = 0
 
-        done = False
-        while not done:
-            # Política ε-greedy
+        obs, info = env.reset()
+        state = discretize_state(obs)
+
+        total_reward = 0
+        terminated = False
+        truncated = False
+
+        while not (terminated or truncated):
+
+            # Política e-greedy
             if np.random.random() < epsilon:
                 action = env.action_space.sample()
             else:
                 action = np.argmax(Q_table[state])
 
-            next_state_raw, reward, done, _, _ = env.step(action)
-            next_state = discretize_state(next_state_raw)
+            next_obs, reward, terminated, truncated, info = env.step(action)
+            next_state = discretize_state(next_obs)
 
-            # Q-learning update
             best_next = np.max(Q_table[next_state])
-            Q_table[state + (action,)] += alpha * (reward + gamma * best_next - Q_table[state + (action,)])
+            Q_table[state + (action,)] += alpha * (
+                reward + gamma * best_next - Q_table[state + (action,)]
+            )
 
             state = next_state
             total_reward += reward
 
         reward_history.append(total_reward)
 
-        # Reducir ε
+        # Reducir exploración
         if epsilon > epsilon_min:
             epsilon *= epsilon_decay
 
-    # Guardar modelo
+    # Guardar Q-table
     with open("static/mountaincar_qtable.pkl", "wb") as f:
         pickle.dump(Q_table, f)
 
@@ -84,7 +92,7 @@ def train_mountaincar():
 
 
 # ============================================================
-# Función para cargar modelo
+# Cargar modelo
 # ============================================================
 def load_model():
     global Q_table
@@ -96,22 +104,25 @@ def load_model():
 
 
 # ============================================================
-# Probar política aprendida (para Flask)
+# Probar política aprendida
 # ============================================================
 def run_policy(max_steps=500):
-    """Devuelve la trayectoria observada del agente."""
     load_model()
 
-    state = discretize_state(env.reset()[0])
+    obs, info = env.reset()
+    state = discretize_state(obs)
+
     trajectory = []
 
     for _ in range(max_steps):
         action = np.argmax(Q_table[state])
-        next_state_raw, reward, done, _, _ = env.step(action)
-        trajectory.append([next_state_raw[0], next_state_raw[1]])  # pos, vel
+        next_obs, reward, terminated, truncated, info = env.step(action)
 
-        state = discretize_state(next_state_raw)
-        if done:
+        trajectory.append([next_obs[0], next_obs[1]])
+
+        state = discretize_state(next_obs)
+
+        if terminated or truncated:
             break
 
     return trajectory

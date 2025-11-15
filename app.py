@@ -131,84 +131,63 @@ def logistica2():
     )
 
 
-# --------------------
-# Aprendizaje por Refuerzo (MountainCar)
-# --------------------
+# ============================================================
+# APRENDIZAJE POR REFUERZO - MOUNTAINCAR
+# ============================================================
 
-# Conceptos (página estática)
-@app.route('/RL/conceptos')
-def rl_conceptos():
-    # Renderiza la página de conceptos (templates/RL_conceptos.html)
-    return render_template('RL_conceptos.html')
-
-
-# Caso práctico - landing (botones para entrenar, ver gráfica y probar política)
-@app.route('/RL/mountaincar')
-def rl_mountaincar():
-    # Inicialmente no mostramos gráfica ni trayectoria
-    return render_template('RL_mountaincar.html', graph=None, trajectory=None)
+# Vista con los conceptos
+@app.route('/aprendizajeRF/conceptos')
+def af_conceptos():
+    return render_template('AFconceptos.html')
 
 
-# Entrenar el agente (llama a train_mountaincar del módulo)
-@app.route('/RL/entrenar')
-def rl_entrenar():
-    # Ejecuta el entrenamiento (síncrono). train_mountaincar debe poblar reward_history y guardar qtable.
+# Vista principal del caso práctico
+@app.route('/aprendizajeRF/ejercicio')
+def af_mountaincar():
+    return render_template('indexAF.html', graph=None, trajectory=None)
+
+
+# Acción: entrenar el agente
+@app.route('/aprendizajeRF/entrenar')
+def af_entrenar():
     train_mountaincar()
-    # Después de entrenar redirigimos a la vista del caso práctico (puedes mostrar gráfica manualmente)
-    return render_template('RL_mountaincar.html', graph=None, trajectory=None)
+    return render_template('indexAF.html', graph=None, trajectory=None)
 
 
-# Generar y mostrar la gráfica de recompensas
-@app.route('/RL/grafica')
-def rl_grafica():
+# Acción: mostrar gráfica
+@app.route('/aprendizajeRF/grafica')
+def af_grafica():
     import matplotlib.pyplot as plt
+    import os
 
-    # Si no hay rewards, informar visualmente mostrando plantilla sin gráfica
     if not reward_history:
-        return render_template('RL_mountaincar.html', graph=None, trajectory=None)
+        return render_template('indexAF.html', graph=None, trajectory=None)
 
     plt.figure(figsize=(8, 4))
     plt.plot(reward_history)
     plt.xlabel("Episodios")
     plt.ylabel("Recompensa acumulada")
     plt.title("Evolución de la recompensa por episodio")
+
     os.makedirs('static', exist_ok=True)
     filepath = os.path.join('static', 'reward_plot.png')
+
     plt.tight_layout()
     plt.savefig(filepath)
     plt.close()
 
-    # Devolver la plantilla mostrando la gráfica
-    return render_template('RL_mountaincar.html', graph=url_for('static', filename='reward_plot.png'), trajectory=None)
+    graph_url = url_for('static', filename='reward_plot.png')
+
+    return render_template('indexAF.html', graph=graph_url, trajectory=None)
 
 
-# Ejecutar la política aprendida y mostrar la trayectoria (lista de estados)
-@app.route('/RL/politica')
-def rl_politica():
-    trajectory = run_policy()  # devuelve lista de estados (pos, vel) o lista de observaciones
-    # Si run_policy devuelve objetos complejos, puedes filtrar solo (pos, vel) en la plantilla o aquí
-    # Convertir a lista simple si es numpy
-    try:
-        trajectory = [list(map(float, s)) for s in trajectory]
-    except Exception:
-        # si trajectory ya es lista de tuplas/arrays con 2 valores, está bien
-        pass
+# Acción: probar la política aprendida
+@app.route('/aprendizajeRF/politica')
+def af_politica():
+    trajectory = run_policy()
+    trajectory = [[float(s[0]), float(s[1])] for s in trajectory]
 
-    return render_template('RL_mountaincar.html', graph=None, trajectory=trajectory)
-
-
-# --------------------
-# Otras rutas de tu app
-# --------------------
-@app.route('/AprendizajeporRefuerzo/conceptos')
-def Aprendizaje():
-    # Mantengo esta ruta si la usas en otros lugares; la dejo apuntando a la página original
-    return render_template('AFconceptos.html')
-
-
-@app.route('/AprendizajeporRefuerzo/ejercicio')
-def Aprendizaje2():
-    return render_template('indexAF.html')
+    return render_template('indexAF.html', graph=None, trajectory=trajectory)
 
 
 @app.route('/index')
