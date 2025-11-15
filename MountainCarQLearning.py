@@ -48,7 +48,9 @@ reward_history = []
 # ENTRENAMIENTO Q-LEARNING
 # ============================================================
 def train_mountaincar():
-    global Q_table, epsilon
+    global Q_table, epsilon, reward_history
+
+    reward_history = []   # Reiniciar solo al entrenar
 
     for episode in range(episodes):
 
@@ -61,7 +63,6 @@ def train_mountaincar():
 
         while not (terminated or truncated):
 
-            # Política e-greedy
             if np.random.random() < epsilon:
                 action = env.action_space.sample()
             else:
@@ -80,15 +81,18 @@ def train_mountaincar():
 
         reward_history.append(total_reward)
 
-        # Reducir exploración
         if epsilon > epsilon_min:
             epsilon *= epsilon_decay
 
-    # Guardar Q-table
     with open("static/mountaincar_qtable.pkl", "wb") as f:
         pickle.dump(Q_table, f)
+        # Guardar histórico de recompensas
+    with open("static/reward_history.pkl", "wb") as f:
+        pickle.dump(reward_history, f)
+
 
     return reward_history
+
 
 
 # ============================================================
@@ -102,6 +106,15 @@ def load_model():
         return True
     return False
 
+def load_reward_history():
+    global reward_history
+    if os.path.exists("static/reward_history.pkl"):
+        with open("static/reward_history.pkl", "rb") as f:
+            reward_history = pickle.load(f)
+        return True
+    return False
+
+
 
 # ============================================================
 # Probar política aprendida
@@ -113,9 +126,12 @@ def run_policy(max_steps=500):
     state = discretize_state(obs)
 
     trajectory = []
+    action_count = {0: 0, 1: 0, 2: 0}
 
     for _ in range(max_steps):
         action = np.argmax(Q_table[state])
+        action_count[action] += 1
+
         next_obs, reward, terminated, truncated, info = env.step(action)
 
         trajectory.append([next_obs[0], next_obs[1]])
@@ -125,4 +141,4 @@ def run_policy(max_steps=500):
         if terminated or truncated:
             break
 
-    return trajectory
+    return trajectory, action_count

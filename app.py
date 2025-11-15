@@ -148,26 +148,41 @@ def af_mountaincar():
 
 
 # Acción: entrenar el agente
+# ============================================================
+# APRENDIZAJE POR REFUERZO - ENTRENAR
+# ============================================================
 @app.route('/aprendizajeRF/entrenar')
 def af_entrenar():
-    train_mountaincar()
-    return render_template('indexAF.html', graph=None, trajectory=None)
+    train_mountaincar()      # Entrenar el modelo
+
+    mensaje = "Entrenamiento completado correctamente."
+
+    return render_template(
+        'indexAF.html',
+        graph=None,
+        trajectory=None,
+        mensaje=mensaje
+    )
 
 
-# Acción: mostrar gráfica
+# Acción: mostrar gráficaz
 @app.route('/aprendizajeRF/grafica')
 def af_grafica():
-    import matplotlib.pyplot as plt
     import os
+    import matplotlib.pyplot as plt
+
+    global reward_history
+    load_reward_history()  # ESTA ES LA LÍNEA QUE FALTABA
 
     if not reward_history:
-        return render_template('indexAF.html', graph=None, trajectory=None)
+        mensaje = "Aún no has entrenado el modelo."
 
+    # Crear gráfica
     plt.figure(figsize=(8, 4))
     plt.plot(reward_history)
     plt.xlabel("Episodios")
     plt.ylabel("Recompensa acumulada")
-    plt.title("Evolución de la recompensa por episodio")
+    plt.title("Evolución del aprendizaje")
 
     os.makedirs('static', exist_ok=True)
     filepath = os.path.join('static', 'reward_plot.png')
@@ -178,16 +193,50 @@ def af_grafica():
 
     graph_url = url_for('static', filename='reward_plot.png')
 
-    return render_template('indexAF.html', graph=graph_url, trajectory=None)
+    return render_template(
+        'indexAF.html',
+        graph=graph_url,
+        trajectory=None
+    )
 
 
 # Acción: probar la política aprendida
 @app.route('/aprendizajeRF/politica')
 def af_politica():
-    trajectory = run_policy()
-    trajectory = [[float(s[0]), float(s[1])] for s in trajectory]
+    import os
+    import matplotlib.pyplot as plt
 
-    return render_template('indexAF.html', graph=None, trajectory=trajectory)
+    trajectory, action_count = run_policy()
+
+    acciones = ["Izquierda", "Quieto", "Derecha"]
+    cantidades = [
+        int(action_count.get(0, 0)),
+        int(action_count.get(1, 0)),
+        int(action_count.get(2, 0))
+    ]
+
+    plt.figure(figsize=(8, 4))
+    plt.bar(acciones, cantidades)
+    plt.title("Acciones realizadas por el agente")
+    plt.ylabel("Frecuencia de uso")
+    plt.xlabel("Acción")
+
+    os.makedirs("static", exist_ok=True)
+    filepath = os.path.join("static", "accion_plot.png")
+
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
+
+    graph_acciones = url_for('static', filename='accion_plot.png')
+
+    return render_template(
+        "indexAF.html",
+        graph=graph_acciones,
+        trajectory=trajectory,
+        action_count=action_count
+    )
+
 
 
 @app.route('/index')
