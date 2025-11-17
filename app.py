@@ -1,19 +1,30 @@
 from flask import Flask, request, render_template, url_for
 import os
-import LinealRegression  
+import LinealRegression
 import RegresionLogistica
-from tipos import LightGBMCase 
+from tipos import LightGBMCase
 
+# Import del módulo MountainCar (asegúrate de que MountainCarQLearning.py esté en el mismo directorio)
+from MountainCarQLearning import train_mountaincar, reward_history, run_policy
+
+# Entrena LightGBM al iniciar (como en tu app original)
 LightGBMCase.train()
+
 app = Flask(__name__)
+
 
 @app.route("/")
 def home():
     return render_template('index.html')
 
+
+# --------------------
+# Regresión lineal
+# --------------------
 @app.route('/linearRegression/conceptos')
 def linearconceptos():
     return render_template('LRconceptos.html')
+
 
 @app.route('/linearRegression/ejercicio', methods=["GET", "POST"])
 def calculatePerformance():
@@ -25,7 +36,7 @@ def calculatePerformance():
         hours = float(request.form["hours"])
         diet = float(request.form["diet"])
         calculateResult = LinealRegression.Rendimiento(hours, diet)
-        calculateResult = min(round(calculateResult, 2), 10) 
+        calculateResult = min(round(calculateResult, 2), 10)
 
         graph_path_hours = LinealRegression.grafico_horas(hours, diet)
         graph_path_diet = LinealRegression.grafico_dieta(hours, diet)
@@ -40,6 +51,7 @@ def calculatePerformance():
         graph_url_diet=graph_url_diet
     )
 
+
 # --------------------
 # Regresión logística
 # --------------------
@@ -47,10 +59,10 @@ def calculatePerformance():
 def logistica():
     return render_template('RLconceptos.html')
 
+
 @app.route('/TiposDeAlgoritmos/conceptos')
 def Tipos():
     return render_template('indexTipos.html')
-
 
 
 @app.route("/TiposDeAlgoritmos/ejercicio", methods=["GET", "POST"])
@@ -118,9 +130,108 @@ def logistica2():
         graph_url=graph_url
     )
 
+
+# ============================================================
+# APRENDIZAJE POR REFUERZO - MOUNTAINCAR
+# ============================================================
+
+# Vista con los conceptos
+@app.route('/aprendizajeRF/conceptos')
+def af_conceptos():
+    return render_template('AFconceptos.html')
+
+
+# Vista principal del caso práctico
+@app.route('/aprendizajeRF/ejercicio')
+def af_mountaincar():
+    return render_template('indexAF.html', graph=None, trajectory=None)
+
+
+# Acción: entrenar el agente
+@app.route('/aprendizajeRF/entrenar')
+def af_entrenar():
+    train_mountaincar()      # Entrenar el modelo
+
+    mensaje = "Entrenamiento completado correctamente."
+
+    return render_template(
+        'indexAF.html',
+        graph=None,
+        trajectory=None,
+        mensaje=mensaje
+    )
+
+
+# Acción: mostrar gráfica
+@app.route('/aprendizajeRF/grafica')
+def af_grafica():
+    import matplotlib.pyplot as plt
+    import os
+
+    if not reward_history:
+        return render_template('indexAF.html', graph=None, trajectory=None)
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(reward_history)
+    plt.xlabel("Episodios")
+    plt.ylabel("Recompensa acumulada")
+    plt.title("Evolución de la recompensa por episodio")
+
+    os.makedirs('static', exist_ok=True)
+    filepath = os.path.join('static', 'reward_plot.png')
+
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
+
+    graph_url = url_for('static', filename='reward_plot.png')
+
+    return render_template('indexAF.html', graph=graph_url, trajectory=None)
+
+
+# Acción: probar la política aprendida
+# Acción: probar la política aprendida
+@app.route('/aprendizajeRF/politica')
+def af_politica():
+    import os
+    import matplotlib.pyplot as plt
+
+    trajectory, action_count = run_policy()
+
+    acciones = ["Izquierda", "Quieto", "Derecha"]
+    cantidades = [
+        int(action_count.get(0, 0)),
+        int(action_count.get(1, 0)),
+        int(action_count.get(2, 0))
+    ]
+
+    plt.figure(figsize=(8, 4))
+    plt.bar(acciones, cantidades)
+    plt.title("Acciones realizadas por el agente")
+    plt.ylabel("Frecuencia de uso")
+    plt.xlabel("Acción")
+
+    os.makedirs("static", exist_ok=True)
+    filepath = os.path.join("static", "accion_plot.png")
+
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
+
+    graph_acciones = url_for('static', filename='accion_plot.png')
+
+    return render_template(
+        "indexAF.html",
+        graph=graph_acciones,
+        trajectory=trajectory,
+        action_count=action_count
+    )
+
+
 @app.route('/index')
 def index():
     return render_template('index2.html')
+
 
 @app.route('/casos')
 def casos():
@@ -131,7 +242,7 @@ def casos():
             "problema": "Mejorar la productividad agrícola mediante predicción del rendimiento de cultivos y detección de plagas/enfermedades usando datos meteorológicos y sensores.",
             "algoritmo": "Random Forest, Árboles de decisión, Máquinas de soporte vectorial (SVM), Gradient Boosting, Redes neuronales convolucionales.",
             "beneficios": "Optimización de recursos, reducción de pérdidas, planificación eficiente de siembras, control de plagas y enfermedades con alta precisión.",
-            "referencia": "Chanchí-Golondrino, A. (2022). Aplicación de machine learning en la agricultura: predicción de rendimiento y control de plagas. Universidad Nacional Abierta y a Distancia (UNAD). Disponible en: https://repository.unad.edu.co/handle/10596/67132" 
+            "referencia": "Chanchí-Golondrino, A. (2022). Aplicación de machine learning en la agricultura: predicción de rendimiento y control de plagas. Universidad Nacional Abierta y a Distancia (UNAD). Disponible en: https://repository.unad.edu.co/handle/10596/67132"
         },
         {
             "titulo": "IA para detección temprana de enfermedades y apoyo diagnóstico",
@@ -157,10 +268,9 @@ def casos():
             "beneficios": "Reducción de tiempos de viaje, asignación eficiente de recursos en movilidad compartida, estimación precisa de la hora de llegada, mayor seguridad en transporte autónomo.",
             "referencia": "IBM. (s.f.).10 casos de uso cotidianos del machine learning. Disponible en: https://www.ibm.com/es-es/think/topics/machine-learning-use-cases"
         }
-
-
     ]
     return render_template('index3.html', cases=CASES)
+
 
 if __name__ == "__main__":
     # Asegúrate de ejecutar desde el directorio del proyecto para que encuentre datos.csv y static/
